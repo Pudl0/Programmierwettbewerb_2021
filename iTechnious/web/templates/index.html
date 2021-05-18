@@ -1,0 +1,43 @@
+<!doctype html>
+<html class="no-js" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlaskHACS - Start</title>
+    <link rel="stylesheet" href="/css/foundation.min.css">
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">FlaskHACS</li>
+          <li><a target="_blank" href="https://discord.com/api/oauth2/authorize?client_id={{ bot.user.id }}&permissions=8&scope=bot">Server Anmelden</a></li>
+          <li class="has-submenu">
+              <a href="#0">Wettbewerb auswählen</a>
+              <ul class="submenu menu vertical" data-submenu>
+                {% for guild in bot.guilds %}
+                <li><a href="/guilds/{{ guild.id }}">{{ guild.name }}</a></li>
+                {% endfor %}
+              </ul>
+          </li>
+          <li><a href="#0">Hilfe</a></li>
+          <li><a href="#0">Über</a></li>
+          <li><a href="/contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li class="menu-text">Einen Wettbewerbs Server auswählen</li>
+        </ul>
+      </div>
+    </div>
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/what-input.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

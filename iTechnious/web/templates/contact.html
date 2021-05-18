@@ -1,0 +1,56 @@
+<!doctype html>
+<html class="no-js" lang="de">
+    <head>
+        <meta charset="utf-8" />
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>FlaskHACS - Kontakt</title>
+        <link rel="stylesheet" href="/css/foundation.min.css">
+        <link rel="stylesheet" href="/css/contact.css">
+    </head>
+    <body>
+        <div class="top-bar">
+        <div class="top-bar-left">
+            <ul class="dropdown menu" data-dropdown-menu>
+            <li class="menu-text">FlaskHACS</li>
+            <li><a href="/">Start</a></li>
+            <li><a href="#0">Hilfe</a></li>
+            <li><a href="#0">Über</a></li>
+            </ul>
+        </div>
+        <div class="top-bar-right">
+            <ul class="menu">
+            <li class="menu-text">Kontakt aufnehmen</li>
+            </ul>
+        </div>
+        </div>
+
+        <div class="content-big">
+            <form action="/post_contact/" method="POST">
+                <label>
+                    Wie ist dein Name?
+                    <input type="text">
+                </label>
+                <label>
+                    Wie ist deine E-Mail Adresse?
+                    <input type="email">
+                </label>
+                <p class="help-text">Wir fragen deine E-Mail Adresse ab, damit wir dir so schnell wie möglich antworten können!</p>
+                <label>
+                    Wo liegt dein Problem?
+                    <textarea></textarea>
+                </label>
+                <p class="help-text">Bitte schildere dein Problem so genau wie möglich!</p>
+
+                <input class="success button" type="submit">
+            </form>
+        </div>
+
+        <script src="/js/jquery-3.6.0.min.js"></script>
+        <script src="/js/what-input.js"></script>
+        <script src="/js/foundation.min.js"></script>
+        <script>
+        $(document).foundation();
+        </script>
+    </body>
+</html>
