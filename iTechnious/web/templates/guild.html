@@ -38,7 +38,7 @@
         <div class="cell" style="margin-top: 10px;">
             <div id="teams-banner" class="float-left">
                 {% if own_team == None %}
-                <a href="create_team/" class="button">Team erstellen</a>
+                <a data-open="create-team-modal"><button type="button" class="button">Team erstellen</button></a>
                 {% endif %}
                 {% if admin == True %}
                 <a href="admin/" class="button">Admin Modus</a>
@@ -54,17 +54,49 @@
         {% if own_team != None and own_team.status == "valid" %}
         <h4>Dein Team</h4>
         <div class="team">
+          <div class="row">
             <div class="float-left">
-                <p class="team-name">{{ own_team["name"] }}</p>
-                {% if own_team["description"] != "" %}
-                <p class="team-des">{{ own_team["description"] }}</p>
-                {% endif %}
+              <p class="team-name">{{ own_team["name"] }}</p>
+              {% if own_team["description"] != "" %}
+              <p class="team-des">{{ own_team["description"] }}</p>
+              {% endif %}
             </div>
             <div class="float-right">
-                <a data-open="delete-team-modal"><button type="button" class="alert button">Team löschen</button></a>
-                <a data-open="invite-member-modal"><button type="button" class="alert button">Mitglied einladen</button></a>
-                <a data-open="kick-member-modal"><button type="button" class="alert button">Mitglied entfernen</button></a>
+              <a data-open="leave-team-modal"><button type="button" class="alert button">Team verlassen</button></a>
+              {% if joins != [] %}
+              <br>
+              <hr>
+              <h5>Beitrittsanfragen</h5>
+              <div class="float-right">
+                <div id="join-request">
+                  {% for join in joins %}
+                    <div class="join-request-with-name">
+                      <p>{{ join.name }}</p>
+                      <div class="float-right">
+                        <form action="/accept_join/" method="post" class="join-accept-form">
+                          <input type="hidden" name="team_id" value="{{ own_team.id }}">
+                          <input type="hidden" name="user_id" value="{{ join.id }}">
+                          <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                          <input type="hidden" name="admin" value="false">
+                          <button class="success button" type="submit" style="margin: 0;">Annehmen</button>
+                        </form>
+                        <form action="/reject_join/" method="post" class="join-reject-form">
+                          <input type="hidden" name="team_id" value="{{ own_team.id }}">
+                          <input type="hidden" name="user_id" value="{{ join.id }}">
+                          <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                          <input type="hidden" name="admin" value="false">
+                          <button class="alert button" type="submit" style="margin: 0;">Ablehnen</button>
+                        </form>
+                      </div>
+                    </div>
+                    <hr>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
             </div>
+          </div>
+
             
         </div>
         {% endif %}
@@ -82,12 +114,16 @@
             </div>
             {% if own_team == None %}
             <div class="float-right">
-                <a href="join/{{ team['id'] }}/"><button type="button" class="success button">Team beitreten</button></a>
+                <form action="/request_join/" method="post">
+                  <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                  <input type="hidden" name="team_id" value="{{ team.id }}">
+                  <button type="submit" class="success button">Team beitreten</button>
+                </form>
             </div>
             {% endif %}
             {% if own_team == team.id %}
             <div class="float-right">
-                <a href="join/{{ team['id'] }}/"><button type="button" class="warning button">Angefragt</button></a>
+                <a href="#"><button type="button" class="warning button">Angefragt</button></a>
             </div>
             {% endif %}
         </div>
@@ -100,6 +136,20 @@
 
 
 
+    <div class="reveal" id="leave-team-modal" data-reveal>
+      <h1>Team verlassen</h1>
+      <p>Du kannst danach bei jedem Team einen Antrag erstellen.</p>
+
+      <form action="/leave/" method="POST">
+        <input type="hidden" name="team_id" value="{{ own_team.id }}">
+        <button type="submit" class="alert button">Team verlassen</button>
+      </form>
+
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    
     <div class="reveal" id="delete-team-modal" data-reveal>
         <h1>Team löschen</h1>
 
@@ -107,6 +157,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
     <div class="reveal" id="invite-member-modal" data-reveal>
         <h1>Mitglied einladen</h1>
 
@@ -114,7 +165,7 @@
             <div class="row">
                 <label>
                     Discord Name des Mitglieds
-                    <input type="text" name="user_name">
+                    <input type="text" name="user_id">
                 </label>
             </div>
             <input type="hidden" name="guild_id" value="{{ guild.id }}">
@@ -126,6 +177,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
     <div class="reveal" id="kick-member-modal" data-reveal>
         <h1>Mitglied entfernen</h1>
 
@@ -133,6 +185,38 @@
           <span aria-hidden="true">&times;</span>
         </button>
     </div>
+
+    <div class="reveal" id="create-team-modal" data-reveal>
+      <h4>Team erstellen</h4>
+      <form action="/create_team/" method="post">
+          <div class="row">
+              <label>
+                  Teamname
+                  <input type="text" name="team_name">
+              </label>
+          </div>
+          <div class="row">
+              <label>
+                  Beschreibung
+                  <input type="text" name="team_des">
+              </label>
+          </div>
+          <div class="row">
+              <label>
+                  Kontakt
+                  <input type="email" name="email">
+              </label>
+          </div>
+          <input type="hidden" name="guild_id" value="{{ guild.id }}">
+          <input type="hidden" name="admin" value="false">
+          <input class="button" type="submit">
+      </form>
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+
+  {% extends "flash.html" %}
 
     <script src="/js/jquery-3.6.0.min.js"></script>
     <script src="/js/what-input.js"></script>

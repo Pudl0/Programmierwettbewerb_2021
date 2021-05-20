@@ -32,9 +32,11 @@
 }
 
 #teams {
-    margin-top: 30px;
+    margin-top: 10px;
+    padding-top: 20px;
     padding-left: 30px;
     padding-right: 30px;
+    padding-bottom: 20px;
     background-color: #f5f5f5;
 }
 
@@ -65,4 +67,19 @@
 
 #no-teams {
     font-size: 30px;
+}
+
+.join-request-with-name p {
+    display: inline;
+    padding-right: 30px;
+    font-size: 20px;
+    height: 100%;
+}
+.join-request-with-name form {
+    display: inline;
+}
+#join-request hr {
+    height: 0px;
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
