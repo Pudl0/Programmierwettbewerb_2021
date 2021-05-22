@@ -179,7 +179,7 @@ def post_create_team():
         if form["team_name"] in [team["name"] for team in cursor.fetchall()]:
             flash("Dieses Team existiert bereits!")
             return redirect(url_for("guild_overview", guild_id=form["guild_id"]))
-        if not request.form["admin"]:
+        if request.form["admin"] == "false":
             members = json.dumps([discord.fetch_user().id])
         else:
             members = []
@@ -187,7 +187,7 @@ def post_create_team():
     mysql.commit()
 
     # return render_template("create_team_success.html", guild=client.get_guild(int(request.form["guild_id"])))
-    flash("Team wurde ersellt! Du musst noch etwas warten, bis es freigeschaltet wurde.")
+    flash("Team wurde ersellt! Bevor es weitergeht muss es von einem Admin freigeschaltet werden")
 
     if request.form["admin"] == "true":
         return redirect(url_for("guild_admin", guild_id=form["guild_id"]))
@@ -236,6 +236,16 @@ def confirm_team():
 
         mysql.commit()
 
+    members = json.loads(team["members"])
+    if members:
+        user = asyncio.run_coroutine_threadsafe(client.fetch_user(members[0]), client.loop).result()
+
+        embed = discord_bot.embeds.Embed(
+            title="Team erstellt",
+            description=f"Ein wunderschöner Tag. Dein Team '{team['name']}' wurde gerade freigeschaltet!"
+        )
+        asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+
     flash("Das Team wurde freigeschaltet")
 
     return redirect(url_for("guild_admin", guild_id=guild_id))
@@ -255,16 +265,27 @@ def delete_team():
             mysql.commit()
 
             guild_id = int(team["guild_id"])
-            guild = client.get_guild(guild_id)
-            text = guild.get_channel(int(team["team_text"]))
-            voice = guild.get_channel(int(team["team_voice"]))
-            role = guild.get_role(int(team["team_role"]))
-            category = text.category
+            if team["status"] == "valid":
+                guild = client.get_guild(guild_id)
+                text = guild.get_channel(int(team["team_text"]))
+                voice = guild.get_channel(int(team["team_voice"]))
+                role = guild.get_role(int(team["team_role"]))
+                category = text.category
 
-            asyncio.run_coroutine_threadsafe(text.edit(name="❌" + text.name), client.loop)
-            asyncio.run_coroutine_threadsafe(voice.edit(name="❌" + voice.name), client.loop)
-            asyncio.run_coroutine_threadsafe(role.delete(), client.loop)
-            asyncio.run_coroutine_threadsafe(category.edit(name="❌" + category.name), client.loop)
+                asyncio.run_coroutine_threadsafe(text.edit(name="❌" + text.name), client.loop)
+                asyncio.run_coroutine_threadsafe(voice.edit(name="❌" + voice.name), client.loop)
+                asyncio.run_coroutine_threadsafe(role.delete(), client.loop)
+                asyncio.run_coroutine_threadsafe(category.edit(name="❌" + category.name), client.loop)
+
+            for user_id in json.loads(team["members"]):
+                user_id = int(user_id)
+                embed = discord_bot.embeds.Embed(
+                    title="Team gelöscht!",
+                    description=f"Ein Admin hat gerade das Team **{team['name']}** gelöscht!",
+                    colour=discord_bot.colour.Colour.red()
+                )
+                user = asyncio.run_coroutine_threadsafe(client.fetch_user(user_id), client.loop).result()
+                asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
 
             flash("Das Team wurde gelöscht!")
             return redirect(url_for("guild_admin", guild_id=guild_id))
@@ -302,7 +323,9 @@ def join_team():
         requests = json.loads(res["requests"])
         members = json.loads(res["members"])
 
-        if not admin_checker(guild_id, discord.fetch_user().id) and str(discord.fetch_user().id) not in team["members"]:
+        request_user = discord.fetch_user()
+
+        if not admin_checker(guild_id, request_user.id) and str(request_user.id) not in team["members"]:
             flash("Du hast keine Berechtigung dazu!")
             return redirect(url_for("guild_overview", guild_id=guild_id))
 
@@ -315,6 +338,29 @@ def join_team():
         cursor.execute(f"UPDATE teams SET `members`='{members}', `requests`='{requests}' WHERE `id`='{team_id}'")
 
         mysql.commit()
+
+    embed = discord_bot.embeds.Embed(
+        title="Beitrittsanfrage angenommen!",
+        description=f"Ein Admin oder ein Mitglied hat gerade deine Anfrage zum Team **{team['name']}** angenommen!",
+        colour=discord_bot.colour.Colour.green()
+    )
+    user = asyncio.run_coroutine_threadsafe(client.fetch_user(user_id), client.loop).result()
+    asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+
+    team_text = asyncio.run_coroutine_threadsafe(client.fetch_channel(int(team["team_text"])), client.loop).result()
+
+    embed = discord_bot.embeds.Embed(
+        title="Beitrittsanfrage angenommen!",
+        description=f"{request_user.name} hat gerade die Anfrage von **{user.name}** angenommen!",
+        colour=discord_bot.colour.Colour.green()
+    )
+    asyncio.run_coroutine_threadsafe(team_text.send(embed=embed), client.loop)
+
+    guild = asyncio.run_coroutine_threadsafe(client.fetch_guild(guild_id), client.loop).result()
+    member = asyncio.run_coroutine_threadsafe(guild.fetch_member(user.id), client.loop).result()
+    if member is not None:
+        role = guild.get_role(int(team["team_role"]))
+        asyncio.run_coroutine_threadsafe(member.add_roles(role), client.loop)
 
     flash("Benutzer wurde ins Team aufgenommen!")
 
@@ -333,7 +379,8 @@ def reject_join():
         cursor.execute(f"SELECT * FROM teams WHERE `id`='{team_id}'")
         team = cursor.fetchone()
         guild_id = int(team["guild_id"])
-        if not admin_checker(guild_id, discord.fetch_user().id) and str(discord.fetch_user().id) not in team["members"]:
+        request_user = discord.fetch_user()
+        if not admin_checker(guild_id, request_user.id) and str(request_user.id) not in team["members"]:
             flash("Keine Berechtigung")
             return redirect(url_for("guild_overview", guild_id=guild_id))
         requests = json.loads(team["requests"])
@@ -342,6 +389,24 @@ def reject_join():
         cursor.execute(f"UPDATE teams SET `requests`='{requests}' WHERE `id`='{team_id}'")
 
         mysql.commit()
+
+    embed = discord_bot.embeds.Embed(
+        title="Beitrittsanfrage abgelehnt!",
+        description=f"Ein Admin oder ein Mitglied hat gerade deine Anfrage zum Team **{team['name']}** abgelehnt :(",
+        colour=discord_bot.colour.Colour.red()
+    )
+    user = asyncio.run_coroutine_threadsafe(client.fetch_user(user_id), client.loop).result()
+    asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+
+    team_text = asyncio.run_coroutine_threadsafe(client.fetch_channel(int(team["team_text"])), client.loop).result()
+
+    embed = discord_bot.embeds.Embed(
+        title="Beitrittsanfrage abgelehnt!",
+        description=f"{request_user.name} hat gerade die Anfrage von **{user.name}** abgelehnt!",
+        colour=discord_bot.colour.Colour.red()
+    )
+    asyncio.run_coroutine_threadsafe(team_text.send(embed=embed), client.loop)
+
     flash("Beitrittsanfrage abgelehnt!")
     if request.form["admin"] == "true":
         return redirect(url_for("guild_admin", guild_id=guild_id))
@@ -380,6 +445,15 @@ def invite_member():
         cursor.execute(f"UPDATE teams SET `requests`='{requests}' WHERE `id`='{team_id}'")
         mysql.commit()
 
+    team_text = asyncio.run_coroutine_threadsafe(client.fetch_channel(int(team["team_text"])), client.loop).result()
+
+    embed = discord_bot.embeds.Embed(
+        title="Benutzer möchte dem Team beitreten!",
+        description=f"**{discord.fetch_user().name}** möchte dem Team beitreten!",
+        colour=discord_bot.colour.Colour.purple()
+    )
+    asyncio.run_coroutine_threadsafe(team_text.send(embed=embed), client.loop)
+
     return redirect(url_for("guild_overview", guild_id=guild_id))
 
 @app.route("/leave/", methods=["POST"])
@@ -394,6 +468,21 @@ def leave():
         members = json.dumps(members)
         cursor.execute(f"UPDATE teams SET `members`='{members}' WHERE `id`='{team_id}'")
         mysql.commit()
+
+    team_text = asyncio.run_coroutine_threadsafe(client.fetch_channel(int(team["team_text"])), client.loop).result()
+
+    embed = discord_bot.embeds.Embed(
+        title="Benutzer hat das Team verlassen!",
+        description=f"{discord.fetch_user().name} hat gerade das Team verlassen!",
+        colour=discord_bot.colour.Colour.red()
+    )
+    asyncio.run_coroutine_threadsafe(team_text.send(embed=embed), client.loop)
+
+    guild = asyncio.run_coroutine_threadsafe(client.fetch_guild(int(team["guild_id"])), client.loop).result()
+    member = asyncio.run_coroutine_threadsafe(guild.fetch_member(discord.fetch_user().id), client.loop).result()
+    if member is not None:
+        role = guild.get_role(int(team["team_role"]))
+        asyncio.run_coroutine_threadsafe(member.remove_roles(role), client.loop)
 
     flash("Du hast das Team verlassen.")
     return redirect(url_for("guild_overview", guild_id=team["guild_id"]))
@@ -455,8 +544,14 @@ def add_header(r):
     return r
 
 
-token = tuple([secrets.DISCORD_BOT_TOKEN])
-_thread.start_new_thread(client.run, token, {})
+token = secrets.DISCORD_BOT_TOKEN
+
+loop = asyncio.get_event_loop()
+loop.create_task(client.start(token))
+
+_thread.start_new_thread(loop.run_forever, tuple(), {})
+
+# _thread.start_new_thread(client.run, token, {})
 
 init.init_db()
 

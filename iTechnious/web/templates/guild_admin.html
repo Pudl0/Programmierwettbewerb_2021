@@ -66,6 +66,11 @@
                 <input type="hidden" name="team_id" value="{{ team.id }}">
                 <button type="submit" class="success button">Team bestätigen</button>
               </form>
+              <form action="/delete_team/" method="post">
+                <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                <input type="hidden" name="team_id" value="{{ team.id }}">
+                <button type="submit" class="alert button">Team löschen</button>
+              </form>
             </div>
         </div>
         {% endif %}
@@ -84,10 +89,7 @@
                 {% endif %}
             </div>
             <div class="float-right">
-                <form action="/delete_team/" method="post">
-                  <input type="hidden" name="team_id" value="{{ team.id }}">
-                  <button type="submit" class="alert button">Team löschen</button>
-                </form>
+              <a data-open="delete-team-{{team.id}}-modal"><button type="button" class="alert button">Team löschen</button></a>
             </div>
             {% if joins[team.id] != [] %}
             <br>
@@ -120,6 +122,18 @@
               </div>
             </div>
             {% endif %}
+
+            <div class="reveal" id="delete-team-{{team.id}}-modal" data-reveal>
+              <h2>Team löschen</h2>
+              <p>Dabei wird die Team-Rolle entfernt, und die Channel unsichtbar gemacht und umbenannt!</p>
+              <form action="/delete_team/" method="post">
+                <input type="hidden" name="team_id" value="{{ team.id }}">
+                <button type="submit" class="alert button">Team löschen</button>
+              </form>
+              <button class="close-button" data-close aria-label="Close modal" type="button">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
         </div>
         {% endif %}
         {% endfor %}
