@@ -9,6 +9,8 @@ from statics import config as conf
 
 
 def init_db():
+    print("Datenbank wird aktualisiert...")
+
     db_mysql = pymysql.connect(
         host=conf.DB.host,
         port=conf.DB.port,
@@ -39,12 +41,25 @@ def init_db():
             res = cursor.fetchone()
             if res is None:
                 print("Neuer Server entdeckt:", guild.name)
-                role = asyncio.run_coroutine_threadsafe(guild.create_role(name="Event-Manager"), client.loop).result()
+                role = asyncio.run_coroutine_threadsafe(guild.create_role(name="Event-Manager", colour=discord.Colour.purple()), client.loop).result()
                 overwrites = {
                     guild.default_role: discord.PermissionOverwrite(view_channel=False),
                     role: discord.PermissionOverwrite(view_channel=True)
                 }
                 text = asyncio.run_coroutine_threadsafe(guild.create_text_channel(name="event-manager", overwrites=overwrites), client.loop).result()
+                embed = discord.embeds.Embed(
+                    title="Willkommen bei FlaskHACS!",
+                    description="Ich bin FlaskHACS und ich bin deine Möglichkeit, deinen Hackathon ganz einfach zu verwalten.\n"
+                                f"Unter {conf.address}/guilds/{guild.id}/ findest du diesen Server im Webinterface.\n"
+                                f"Schicke diesen Link auch deinen Teilnehmern. Über ihn können sie ihr Team erstellen und auf den Discord kommen.\n"
+                                f"Alles weitere kannst du entweder selbst entdecken, oder unter \n"
+                                f"{conf.address}/about und {conf.address}/help\n"
+                                f"nachlesen.\n"
+                                f"**Wichtig ist**: Jeder, der die 'Event-Manager' Rolle hat, hat Admin Zugang in der Web App! "
+                                f"Weise die Rolle entsprechend zu!"
+                )
+                asyncio.run_coroutine_threadsafe(text.send(embed=embed), client.loop).result()
+
                 cursor.execute(f"INSERT INTO competitions (guild_id, manager_role, manager_chat) VALUES ({guild.id}, {role.id}, {text.id})")
 
         # cursor.execute(f"CREATE TABLE IF NOT EXISTS `joins` ("

@@ -1,0 +1,114 @@
+<!doctype html>
+<html class="no-js" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlaskHACS - Start</title>
+    <link rel="stylesheet" href="/css/foundation.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/help.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">FlaskHACS</li>
+          <li><a href="/">Start</a></li>
+          <li><a href="/about">Über</a></li>
+          <li><a href="/contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li class="menu-text">Hilfe erhalten</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="head">
+        <h2 class="animate__animated animate__bounceInLeft">FlaskHACS</h2>
+        <p class="animate__animated animate__bounceInRight">Hilfeseite zur Hackathon Verwaltung</p>
+    </div>
+    <div id="help" class="animate__animated animate__fadeInLeft">
+        <button type="button" class="button" onClick="document.getElementById('faq').scrollIntoView();">Direkt zum F.A.Q</button>
+
+        <div id="home" class="help-item">
+            <h3>Die Startseite</h3>
+            <p>
+                Auf der Startseite findest du oben den Menüband.
+                Der Knopf "Server anmelden" öffnet den Discord Dialog, um den Bot zu einem Eventserver hinzuzufügen.
+                Daneben findest du ein Dropdown mit den Events, die aktuell laufen. <br>
+                Zu der Eventübersicht findest du weiter unten noch etwas.
+            </p>
+        </div>
+        <hr>
+        <div id="guild-signup" class="help-item">
+            <h3>Einen Eventserver anmelden</h3>
+            <p>
+                Bei einem Klick auf den "Server anmelden" Knopf öffnet sich ein neuer Tab und du wirst auf die Discord Seite weitergeleitet.
+                Dort kannst du einen Server auswählen, auf den der Bot eingeladen werden soll.
+                Nachdem du einen ausgewählt hast, musst du dem Bot noch Admin Rechte bestätigen und ein CAPTCHA lösen.
+                Danach passieren einige Dinge. Nach einem Klick auf "Authorize" kommt der Bot auf den Server. Dort erstellt er einen Event-Manager Kanal und die zugehörige Rolle.
+                Diese Rolle "Event-Manager" kannst du dir selbst und deinen Mit-Verwaltern geben. Dadurch bekommen sie den Adminzugang auf dieser App.
+            </p>
+        </div>
+        <hr>
+        <div id="guild-overview" class="help-item">
+            <h3>Eventserver Übersicht</h3>
+            <p>
+                Auf der Server Übersicht findest du als erstes den Namen und das Icon des Wettbewerbs. Außerdem findest du den Einladungslink zum entsprechenden Discord Server. <br>
+                Solltest du noch keinem Team beigetreten sein, kannst du mit dem Knopf oben links eins erstellen. Solltest du zusätzlich die Event-Manager Rolle haben, kannst du ebenso auf den Admin Modus wechseln.
+                Zu dieser Seite aber gleich mehr. <br>
+                Unter diesem ersten Abschnitt findest du die Übersicht der Teams. Mit einem Knopfdruck auf "Team beitreten" beim entsprechenden Team kannst du eine Anfrage zum Team schicken. 
+                Diese kann dann von jedem der Teammitglieder, als auch von den Event-Managern angenommen oder abgelehnt werden.
+                Sobald du einem Team angehörst, wird dieses Team dir ganz oben angezeigt. Solltest du es wieder verlassen wollen, so ist dies auch mit einem Knopfdruck auf "Team verlassen" möglich.
+                Damit wir alle über diese Vorgänge auf dem Laufenden halten können, solltest du schon vor dem Anmelden auf den Server joinen, da der Bot nur Nachrichten an Nutzer senden kann, die auch auf dem Server sind.
+            </p>
+            <h4>Beitritts-Anfragen</h4>
+            <p>
+                Sollte dein eigenes Team Beitritts-Anfragen erhalten, dann werden sie ebenfalls auf der Übersicht erscheinen. 
+                Es werdem die entsprechenden Discord Namen mit den Knöpfem für annehmen und ablehnen angezeigt. Klickst du auf "Annehmen", so wird dieser Benutzer aus der Schwebe genommen und deinem Team hinzugefügt.
+                Dabei bekommt der Benutzer gleichzeitig die Team-Rolle auf dem Discord Server. Sollte das Mitglied erst danach auf den Server joinen ist das kein Problem. Dem Benuter wird die Team-Rolle automatisch hinzugefügt.
+            </p>
+        </div>
+    </div>
+
+    <div id="faq" class="animate__animated animate__bounceInRight" >
+        <h3>F.A.Q</h3>
+        <p>Deine Fragen kurz und bündig beantwortet!</p>
+        <ul class="accordion" data-accordion>
+            <li class="accordion-item is-active" data-accordion-item>
+              <a href="#" class="accordion-title">Muss ich mir ein Konto erstellen?</a>
+              <div class="accordion-content" data-tab-content >
+                <p>Hier musst du dir kein Konto erstellen. Zweckmäßig ruft diese App aber deine Kontodaten von Discord ab. Dies passiert, sobald du auf die Events zugreifen möchtest. Dazu musst du dich bei Discord anmelden bzw. registrieren.</p>
+              </div>
+            </li>
+
+            <li class="accordion-item" data-accordion-item>
+              <a href="#" class="accordion-title">Kann ich in mehreren Teams gleichzeitig sein?</a>
+              <div class="accordion-content" data-tab-content>
+                <p>Nein, das ist offiziell nicht möglich.</p>
+              </div>
+            </li>
+
+            <li class="accordion-item" data-accordion-item>
+              <a href="#" class="accordion-title">Was, wenn ich in einem Team bin, aber noch nicht auf dem Server bin?</a>
+              <div class="accordion-content" data-tab-content>
+                <p>Absolut kein Problem! Klicke einfach auf den Link unter dem Namen des Events und joine so dem Eventserver. Wenn du joinst, wird dir automatisch deine Team-Rolle zugewiesen.</p>
+              </div>
+            </li>
+          </ul>
+    </div>
+
+    {% extends "flash.html" %}
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/what-input.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

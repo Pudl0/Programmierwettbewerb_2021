@@ -25,6 +25,11 @@
     margin-left: 10px;
     font-size: 30px;
 }
+#guild-invite {
+    display: flex;
+    margin-left: 10px;
+    font-size: 20px;
+}
 
 #teams-banner {
     display: inline;

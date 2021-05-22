@@ -1,4 +1,6 @@
 import asyncio
+import time
+
 import discord as discord_bot
 import _thread
 import os
@@ -42,6 +44,7 @@ print("#    -----------------------   #")
 print("#           Soenke K.          #")
 print("################################")
 
+print("Routen werden registriert...")
 
 def admin_checker(guild_id, user_id):
     with mysql.cursor() as cursor:
@@ -75,6 +78,14 @@ def team_getter(guild_id, user_id):
 @app.route("/")
 def mainPage():
     return render_template("index.html", bot=client)
+
+@app.route("/help")
+def help_page():
+    return render_template("help.html")
+
+@app.route("/about")
+def about_page():
+    return render_template("about.html")
 
 @app.route("/guilds/<guild_id>/")
 @requires_authorization
@@ -131,7 +142,14 @@ def guild_overview(guild_id):
             own_team = team["id"]
             break
 
-    return render_template("guild.html", guild=guild, teams=teams, admin=is_admin, own_team=own_team, joins=joins)
+    invite = asyncio.run_coroutine_threadsafe(guild.invites(), client.loop).result()
+
+    if len(invite) == 0:
+        invite = asyncio.run_coroutine_threadsafe(guild.system_channel.create_invite(), client.loop).result()
+    else:
+        invite = invite[0]
+
+    return render_template("guild.html", guild=guild, teams=teams, admin=is_admin, own_team=own_team, joins=joins, invite=invite)
 
 @app.route("/guilds/<guild_id>/admin/")
 @requires_authorization
@@ -236,6 +254,9 @@ def confirm_team():
 
         mysql.commit()
 
+        cursor.execute(f"SELECT * FROM teams WHERE `id`='{team_id}'")
+        team = cursor.fetchone()
+
     members = json.loads(team["members"])
     if members:
         user = asyncio.run_coroutine_threadsafe(client.fetch_user(members[0]), client.loop).result()
@@ -244,7 +265,22 @@ def confirm_team():
             title="Team erstellt",
             description=f"Ein wunderschöner Tag. Dein Team '{team['name']}' wurde gerade freigeschaltet!"
         )
-        asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+        try:
+            asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+        except discord_bot.errors.Forbidden:
+            pass
+
+        guild = asyncio.run_coroutine_threadsafe(client.fetch_guild(guild_id), client.loop).result()
+        try:
+            member = asyncio.run_coroutine_threadsafe(guild.fetch_member(user.id), client.loop).result()
+        except discord_bot.errors.NotFound:
+            member = None
+
+        print(member)
+
+        if member is not None:
+            role = guild.get_role(int(team["team_role"]))
+            asyncio.run_coroutine_threadsafe(member.add_roles(role), client.loop)
 
     flash("Das Team wurde freigeschaltet")
 
@@ -272,10 +308,10 @@ def delete_team():
                 role = guild.get_role(int(team["team_role"]))
                 category = text.category
 
-                asyncio.run_coroutine_threadsafe(text.edit(name="❌" + text.name), client.loop)
-                asyncio.run_coroutine_threadsafe(voice.edit(name="❌" + voice.name), client.loop)
-                asyncio.run_coroutine_threadsafe(role.delete(), client.loop)
-                asyncio.run_coroutine_threadsafe(category.edit(name="❌" + category.name), client.loop)
+                asyncio.run_coroutine_threadsafe(text.edit(name="❌" + text.name), client.loop).result()
+                asyncio.run_coroutine_threadsafe(voice.edit(name="❌" + voice.name), client.loop).result()
+                asyncio.run_coroutine_threadsafe(role.delete(), client.loop).result()
+                asyncio.run_coroutine_threadsafe(category.edit(name="❌" + category.name), client.loop).result()
 
             for user_id in json.loads(team["members"]):
                 user_id = int(user_id)
@@ -285,7 +321,10 @@ def delete_team():
                     colour=discord_bot.colour.Colour.red()
                 )
                 user = asyncio.run_coroutine_threadsafe(client.fetch_user(user_id), client.loop).result()
-                asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+                try:
+                    asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+                except discord_bot.errors.Forbidden:
+                    pass
 
             flash("Das Team wurde gelöscht!")
             return redirect(url_for("guild_admin", guild_id=guild_id))
@@ -345,7 +384,10 @@ def join_team():
         colour=discord_bot.colour.Colour.green()
     )
     user = asyncio.run_coroutine_threadsafe(client.fetch_user(user_id), client.loop).result()
-    asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+    try:
+        asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+    except discord_bot.errors.Forbidden:
+        pass
 
     team_text = asyncio.run_coroutine_threadsafe(client.fetch_channel(int(team["team_text"])), client.loop).result()
 
@@ -357,10 +399,25 @@ def join_team():
     asyncio.run_coroutine_threadsafe(team_text.send(embed=embed), client.loop)
 
     guild = asyncio.run_coroutine_threadsafe(client.fetch_guild(guild_id), client.loop).result()
-    member = asyncio.run_coroutine_threadsafe(guild.fetch_member(user.id), client.loop).result()
+    try:
+        member = asyncio.run_coroutine_threadsafe(guild.fetch_member(user.id), client.loop).result()
+    except discord_bot.errors.NotFound:
+        member = None
+
     if member is not None:
         role = guild.get_role(int(team["team_role"]))
         asyncio.run_coroutine_threadsafe(member.add_roles(role), client.loop)
+    else:
+        invite = asyncio.run_coroutine_threadsafe(team_text.create_invite(max_uses=1), client.loop).result()
+        embed = discord_bot.embeds.Embed(
+            title="Komm auf den Event Server!",
+            description=f"Dort kannst du mit deinem Team schreiben und dein Werk abgeben!\n{invite.url}",
+            colour=discord_bot.colour.Colour.purple()
+        )
+        try:
+            asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop).result()
+        except discord_bot.errors.Forbidden:
+            pass
 
     flash("Benutzer wurde ins Team aufgenommen!")
 
@@ -396,7 +453,10 @@ def reject_join():
         colour=discord_bot.colour.Colour.red()
     )
     user = asyncio.run_coroutine_threadsafe(client.fetch_user(user_id), client.loop).result()
-    asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+    try:
+        asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)
+    except discord_bot.errors.Forbidden:
+        pass
 
     team_text = asyncio.run_coroutine_threadsafe(client.fetch_channel(int(team["team_text"])), client.loop).result()
 
@@ -454,6 +514,10 @@ def invite_member():
     )
     asyncio.run_coroutine_threadsafe(team_text.send(embed=embed), client.loop)
 
+    flash("Der Beitritt wurde angefragt. "
+          "Bitte trete dem Eventserver über den Link oben bei! "
+          "Du bekommst dann automatische deine Rolle.")
+
     return redirect(url_for("guild_overview", guild_id=guild_id))
 
 @app.route("/leave/", methods=["POST"])
@@ -479,10 +543,13 @@ def leave():
     asyncio.run_coroutine_threadsafe(team_text.send(embed=embed), client.loop)
 
     guild = asyncio.run_coroutine_threadsafe(client.fetch_guild(int(team["guild_id"])), client.loop).result()
-    member = asyncio.run_coroutine_threadsafe(guild.fetch_member(discord.fetch_user().id), client.loop).result()
-    if member is not None:
-        role = guild.get_role(int(team["team_role"]))
-        asyncio.run_coroutine_threadsafe(member.remove_roles(role), client.loop)
+    try:
+        member = asyncio.run_coroutine_threadsafe(guild.fetch_member(discord.fetch_user().id), client.loop).result()
+        if member is not None:
+            role = guild.get_role(int(team["team_role"]))
+            asyncio.run_coroutine_threadsafe(member.remove_roles(role), client.loop)
+    except discord_bot.errors.NotFound:
+        pass
 
     flash("Du hast das Team verlassen.")
     return redirect(url_for("guild_overview", guild_id=team["guild_id"]))
@@ -544,6 +611,8 @@ def add_header(r):
     return r
 
 
+print("Der Bot startet...")
+
 token = secrets.DISCORD_BOT_TOKEN
 
 loop = asyncio.get_event_loop()
@@ -553,7 +622,10 @@ _thread.start_new_thread(loop.run_forever, tuple(), {})
 
 # _thread.start_new_thread(client.run, token, {})
 
-init.init_db()
+while not client.is_ready():
+    time.sleep(1)
+
+print("Der Webserver wird gestartet...")
 
 if __name__ == "__main__":
     app.run(host=config.bind, port=config.web_port)
