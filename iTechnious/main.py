@@ -2,6 +2,8 @@ import asyncio
 import time
 
 import discord as discord_bot
+from discord_interactions import verify_key_decorator
+import importlib
 import _thread
 import os
 import json
@@ -12,7 +14,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
 
-from flask import Flask, redirect, render_template, request, url_for, flash
+from flask import Flask, redirect, render_template, request, url_for, flash, jsonify
 from flask_discord import DiscordOAuth2Session, Unauthorized, requires_authorization
 
 import init
@@ -20,6 +22,7 @@ import statics.config as config
 import statics.secrets as secrets
 from bot import client
 from globals import mysql
+from helpers import *
 
 # logging.basicConfig(level=logging.DEBUG)
 
@@ -46,44 +49,67 @@ print("################################")
 
 print("Routen werden registriert...")
 
-def admin_checker(guild_id, user_id):
-    with mysql.cursor() as cursor:
-        cursor.execute(f"SELECT manager_role FROM competitions WHERE `guild_id`='{str(guild_id)}'")
-        role = cursor.fetchone()["manager_role"]
-
-    guild = client.get_guild(int(guild_id))
-    try:
-        member = asyncio.run_coroutine_threadsafe(guild.fetch_member(user_id), client.loop).result()
-    except discord_bot.errors.NotFound:
-        return False
-
-    member_roles = [str(role.id) for role in member.roles]
-
-    if not str(role) in member_roles:
-        return False
-    return True
-
-def team_getter(guild_id, user_id):
-    with mysql.cursor() as cursor:
-        cursor.execute(f"SELECT * FROM teams WHERE `guild_id`={guild_id}")
-        teams = cursor.fetchall()
-
-    for team in teams:
-        if user_id in json.loads(team["members"]):
-            return team
-    return None
-
-
 # Front-End
 @app.route("/")
 def mainPage():
-    return render_template("index.html", bot=client)
+    return render_template("index.html", bot=client, logged_in=discord.authorized)
 
-@app.route("/help")
+@app.route("/interaction/", methods=["POST"])
+@verify_key_decorator(config.DISCORD_PUBLIC_KEY)
+def interaction():
+    req = request.json
+    if req["type"] == 1:
+        return {"type": 1}
+
+    if "options" not in req["data"].keys():
+        req["data"]["options"] = []
+
+    location = [req["data"]["name"]]
+    option_level = req["data"]["options"]
+
+    if len(option_level) > 0:
+        while "options" in option_level[0].keys():
+            location.append(option_level[0]["name"])
+            option_level = option_level[0]["options"]
+    location = "interactions.commands." + ".".join(location)
+
+    try:
+        module = importlib.import_module(location)  # "slash-commands."+req["data"]["name"])
+    except ModuleNotFoundError:
+        return jsonify({"type": 4,
+                        "data": {
+                            "tts": False,
+                            "content": "Huch! Das sollte nicht passieren, aber das Feature gibts irgendwie nicht...",
+                            "embeds": [],
+                            "allowed_mentions": []
+                            }
+                        })
+    # res = asyncio.run(module.run(req, client=client))
+
+    print(req)
+
+    res = module.run(req, client=client, options=option_level, mysql=mysql)
+
+    return jsonify(res)
+
+@app.route("/flash/")
+def flash_test():
+    flash(
+        """
+        Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et 
+        dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. 
+        Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, 
+        consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, 
+        sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea 
+        takimata sanctus est Lorem ipsum dolor sit amet.
+        """
+    )
+    return redirect(url_for("mainPage"))
+@app.route("/help/")
 def help_page():
     return render_template("help.html")
 
-@app.route("/about")
+@app.route("/about/")
 def about_page():
     return render_template("about.html")
 
@@ -102,8 +128,11 @@ def guild_overview(guild_id):
         cursor.execute(f"SELECT * FROM teams WHERE `guild_id`={str(guild_id)}")
         teams = cursor.fetchall()
         try:
-            cursor.execute(f"SELECT manager_role FROM competitions WHERE `guild_id`='{str(guild_id)}'")
-            role = cursor.fetchone()["manager_role"]
+            cursor.execute(f"SELECT * FROM competitions WHERE `guild_id`='{str(guild_id)}'")
+            res = cursor.fetchone()
+            role = res["manager_role"]
+            db_guild = res
+            description = res["description"]
         except TypeError:
             flash("Es gab ein Problem beim Abrufen der Daten.\n"
                   "Sollte der Fehler weiterhin auftreten, versuche den Bot vom Server zu kicken und dann neu anzumelden.\n"
@@ -149,7 +178,7 @@ def guild_overview(guild_id):
     else:
         invite = invite[0]
 
-    return render_template("guild.html", guild=guild, teams=teams, admin=is_admin, own_team=own_team, joins=joins, invite=invite)
+    return render_template("guild.html", guild=guild, description=description, teams=teams, admin=is_admin, own_team=own_team, joins=joins, invite=invite, fields=json.loads(db_guild["custom_fields"]))
 
 @app.route("/guilds/<guild_id>/admin/")
 @requires_authorization

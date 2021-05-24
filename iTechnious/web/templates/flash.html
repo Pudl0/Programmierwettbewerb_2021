@@ -1,8 +1,12 @@
+<head>
+  <link rel="stylesheet" href="/js/animate.min.css">
+</head>
+
 <div id="flashes">
   {% with messages = get_flashed_messages() %}
     {% if messages %}
       {% for message in messages %}
-      <div class="callout" data-closable>
+      <div class="callout animate__animated animate__backInRight" data-closable>
         <button class="close-button" aria-label="Close alert" type="button" data-close>
           <span aria-hidden="true">&times;</span>
         </button>

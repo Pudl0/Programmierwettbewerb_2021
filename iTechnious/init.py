@@ -11,18 +11,6 @@ from statics import config as conf
 def init_db():
     print("Datenbank wird aktualisiert...")
 
-    db_mysql = pymysql.connect(
-        host=conf.DB.host,
-        port=conf.DB.port,
-        user=conf.DB.user,
-        password=conf.DB.password
-    )
-
-    with db_mysql.cursor() as cursor:
-        cursor.execute("CREATE DATABASE IF NOT EXISTS %s" % conf.DB.db)
-    db_mysql.commit()
-    db_mysql.close()
-
     with mysql.cursor() as cursor:
         cursor.execute(f"CREATE TABLE IF NOT EXISTS `competitions` ("
                        "id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,"
@@ -60,7 +48,7 @@ def init_db():
                 )
                 asyncio.run_coroutine_threadsafe(text.send(embed=embed), client.loop).result()
 
-                cursor.execute(f"INSERT INTO competitions (guild_id, manager_role, manager_chat) VALUES ({guild.id}, {role.id}, {text.id})")
+                cursor.execute(f"INSERT INTO competitions (`guild_id`, `description`, `manager_role`, `manager_chat`, `custom_fields`) VALUES ('{guild.id}', ' ', '{role.id}', '{text.id}', '{{}}')")
 
         # cursor.execute(f"CREATE TABLE IF NOT EXISTS `joins` ("
         #                "id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,"

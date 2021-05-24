@@ -14,12 +14,20 @@
 
 #guild-picture {
     display: flex;
+    width: 100px;
+    max-width: 100px;
 }
 #guild-picture img {
-    max-height: 100px;
+    height: 100px;
+    width: 100px;
+    max-width: 100px;
     display: flex;
     border-radius: 20px;
 }
+#guild-name-invite {
+    padding-left: 10px;
+}
+
 #guild-name {
     display: flex;
     margin-left: 10px;
@@ -27,22 +35,59 @@
 }
 #guild-invite {
     display: flex;
+    width: auto;
     margin-left: 10px;
-    font-size: 20px;
 }
 
-#teams-banner {
-    display: inline;
+#description {
+    font-size: 20px;
+    text-align: left;
+    min-width: 350px;
+}
+
+#guild-buttons {
+    padding-top: 20px;
     font-size: 30px;
 }
 
-#teams {
+#custom-fields {
+    padding-left: 20px;
+    padding-right: 20px;
     margin-top: 10px;
+    width: 100%;
+}
+#custom-fields .grid-x {
+    width: 100%;
+}
+#custom-fields .grid-x .cell {
+    font-size: 20px;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+}
+#custom-fields hr {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+#teams-text {
+    font-size: 30px;
+    padding-left: 30px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #dadada;
+}
+
+#teams {
     padding-top: 20px;
     padding-left: 30px;
     padding-right: 30px;
     padding-bottom: 20px;
     background-color: #f5f5f5;
+}
+
+#teams hr {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .team {
@@ -87,4 +132,8 @@
     height: 0px;
     margin-top: 5px;
     margin-bottom: 5px;
+}
+
+#row div {
+    display: inline;
 }

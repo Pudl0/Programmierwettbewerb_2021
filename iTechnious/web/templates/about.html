@@ -1,0 +1,94 @@
+<!doctype html>
+<html class="no-js" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlaskHACS - Start</title>
+    <link rel="stylesheet" href="/css/foundation.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+    <link rel="stylesheet" href="/css/about.css">
+    <link rel="stylesheet" href="/js/animate.min.css">
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">FlaskHACS</li>
+          <li><a href="/">Start</a></li>
+          <li><a href="/help/">Hilfe</a></li>
+          <li><a href="/contact/">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li class="menu-text">Über FlaskHACS</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="head">
+        <h2 class="animate__animated animate__bounceInLeft">FlaskHACS</h2>
+        <p class="animate__animated animate__bounceInRight">Alle Infos und Funfacts</p>
+    </div>
+    <div id="about" class="animate__animated animate__fadeInLeft">
+        <div class="about-item">
+          <h3>Was bedeutet FlaskHACS?</h3>
+          <p>
+              FlaskHACS wurde mit der Webserver und Templating Library <a href="https://flask.palletsprojects.com/en/2.0.x/">Flask</a> programmiert.
+              Das Projekt möchte das erstellen, verwalten und überwachen von Hackathons vereinfachen. 
+              Da bietet sich das Akronym <a href="https://www.abbreviations.com/term/1890577">HACS</a> (Hackathon and Computing Society) an.
+              So kommt der Name FlaskHACS zustande.
+          </p>
+        </div>
+        <hr>
+        <div class="about-item">
+          <h3>Funktionsweise</h3>
+          <p>
+              Ein detaillierte Fassung findest du unter <a href="/help">Hilfe</a>. <br>
+              FlaskHACS ist auf die Benutzung mit einem Discord Server eingestellt, auf dem der Wettbewerb stattfindet.
+              Die FlaskHACS Website, diese Website, bietet eine Benutzerfreundliche Oberfläche 
+              und der zugehörige Discord Bot sorgt für die Automatisierung.
+              Jeder Server, auf dem der Bot Mitglied ist, erscheint in der Liste von Wettbewerben auf der <a href="/">Startseite.</a>
+              Jeder hat dann die Möglichkeit ein Team zu erstellen und beizutreten. Im Hintergrund sorgt der Bot dann für die Rollenverteilung
+              und für die Team Kanäle.
+          </p>
+        </div>
+        <hr>
+        <div class="about-item">
+          <h3>Mächtige Admin Features</h3>
+          <p>
+              FlaskHACS bietet viele Möglichkeiten für Admins und Teammitglieder, den Wettbewerb zu verwalten. 
+              Trotzdem bleiben die Abläufe simpel, schnell und für jeden zu verstehen.
+              Weise einfach einem Mitglied auf deinem Discord Server die "Event-Manager" Rolle zu, und schon hat er die nötigen Rechte auf dem Webinterface.
+              Das ist unerreichte Verbindung von den Discord Systemen und der Verwaltungs Software!
+          </p>
+        </div>
+        <hr>
+        <div class="about-item">
+          <h3>Entspannte Administration</h3>
+          <p>
+            FlaskHACS ist sowohl sehr einfach einzurichten als auch kinderleicht zu warten. 
+            Die erste Einrichtung benötigt lediglich eine MySql Datenbank und eine Discord Applikation. Tragen Sie die Daten einfach in die Mitgelieferte
+            Konfigurationsdatei und schon kann es losgehen!
+          </p>
+        </div>
+        <hr>
+        <div class="about-item">
+          <h3>Noch Fragen?</h3>
+          <p>
+            Dann melde dich gerne über das <a href="/contact">Kontaktformular</a>!
+          </p>
+        </div>
+    </div>
+
+    {% extends "flash.html" %}
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/what-input.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

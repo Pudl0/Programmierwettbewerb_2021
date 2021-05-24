@@ -5,6 +5,11 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FlaskHACS - Start</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+<link rel="manifest" href="/site.webmanifest">
     <link rel="stylesheet" href="/css/foundation.min.css">
     <link rel="stylesheet" href="/css/index.css">
   </head>
@@ -13,13 +18,21 @@
       <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
           <li class="menu-text">FlaskHACS</li>
-          <li><a target="_blank" href="https://discord.com/api/oauth2/authorize?client_id={{ bot.user.id }}&permissions=8&scope=bot">Server Anmelden</a></li>
+          <li><a target="_blank" href="https://discord.com/api/oauth2/authorize?client_id={{ bot.user.id }}&permissions=8&scope=bot applications.commands">Server Anmelden</a></li>
           <li class="has-submenu">
               <a href="#0">Wettbewerb auswählen</a>
               <ul class="submenu menu vertical" data-submenu>
-                {% for guild in bot.guilds %}
-                <li><a href="/guilds/{{ guild.id }}/">{{ guild.name }}</a></li>
-                {% endfor %}
+                {% if logged_in == True %}
+                  {% if bot.guilds != [] %}
+                    {% for guild in bot.guilds %}
+                    <li><a href="/guilds/{{ guild.id }}/">{{ guild.name }}</a></li>
+                    {% endfor %}
+                  {% else %}
+                    <li><p>Noch kein Event gestartet. Melde jetzt einen Server an!</a></p></li>
+                  {% endif %}
+                {% else %}
+                <li><a href="/login">Zuerst einloggen!</a></li>
+                {% endif %}
               </ul>
           </li>
           <li><a href="/help">Hilfe</a></li>

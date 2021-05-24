@@ -59,6 +59,7 @@
                 {% if team["description"] != "" %}
                 <p class="team-des">{{ team["description"] }}</p>
                 {% endif %}
+                <p><a href="mailto:{{ team.contact }}">{{ team.contact }}</a></p>
             </div>
             <div class="float-right">
               <form action="/confirm_team/" method="post">
