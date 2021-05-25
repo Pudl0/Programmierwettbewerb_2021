@@ -1,0 +1,96 @@
+
+.home {
+  .profile-picture, .guild img {
+    border-radius: 50%;
+    float: left;
+    width: 4.5em;
+    height: 4.5em;
+    margin: 0.5em 1em 0 0;
+  }
+
+  .profile-picture {
+    cursor: pointer;
+    overflow: hidden;
+    background-position: center;
+    background-size: cover;
+
+    .pencil {
+      display: none;
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      box-shadow: 0 0 0 5em rgba(0, 0, 0, 0.5);
+      position: relative;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 2em;
+      height: 2em;
+    }
+
+    &:hover {
+      .pencil {
+        display: block;
+      }
+    }
+  }
+
+  .guild {
+    clear: both;
+
+    span {
+      font-weight: normal;
+      font-size: 1.25em;
+      padding-top: 0.15em;
+      display: block;
+    }
+
+    img {
+      height: 4em;
+      width: 4em;
+      background-color: #3b3b3b;
+    }
+
+    margin-bottom: 1em;
+  }
+
+  .bot-info {
+    display: block;
+    width: 100%;
+    float: left;
+
+    .btn {
+      margin-top: 0.5em;
+    }
+
+    .bot-name {
+      padding: 0.25em 0;
+      font-weight: normal;
+
+      .discriminator {
+        color: #a5a5a5;
+      }
+
+      .edit {
+        width: 0.75em;
+        height: 0.75em;
+        margin: 0 0.1em;
+        color: gray;
+      }
+
+      .edit-bot-name {
+        width: 10em;
+        display: inline;
+        height: 2em;
+      }
+    }
+
+    .badge {
+      font-size: 0.7em;
+      margin-left: 0.5em;
+    }
+  }
+
+  .servers {
+    margin-top: 8em;
+  }
+}
