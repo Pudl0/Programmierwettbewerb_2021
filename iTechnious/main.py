@@ -178,7 +178,19 @@ def guild_overview(guild_id):
     else:
         invite = invite[0]
 
-    return render_template("guild.html", guild=guild, description=description, teams=teams, admin=is_admin, own_team=own_team, joins=joins, invite=invite, fields=json.loads(db_guild["custom_fields"]))
+    fields = json.loads(db_guild["custom_fields"])
+
+    for key in fields.keys():
+        field = fields[key]
+        field = field.split(" ")
+        for i in range(0, len(field)):
+            part = field[i]
+            if part.startswith("http://") or part.startswith("https://"):
+                part = f'<a href="{part}" target="_blank">{part}</a>'
+            field[i] = part
+        fields[key] = " ".join(field)
+
+    return render_template("guild.html", guild=guild, description=description, teams=teams, admin=is_admin, own_team=own_team, joins=joins, invite=invite, fields=fields)
 
 @app.route("/guilds/<guild_id>/admin/")
 @requires_authorization
@@ -222,8 +234,9 @@ def post_create_team():
     form = request.form
 
     with mysql.cursor() as cursor:
-        cursor.execute(f"SELECT name FROM teams WHERE `guild_id`='{form['guild_id']}'")
-        if form["team_name"] in [team["name"] for team in cursor.fetchall()]:
+        cursor.execute(f"SELECT * FROM teams WHERE `guild_id`='{form['guild_id']}'")
+        teams = cursor.fetchall()
+        if form["team_name"] in [team["name"] for team in teams]:
             flash("Dieses Team existiert bereits!")
             return redirect(url_for("guild_overview", guild_id=form["guild_id"]))
         if request.form["admin"] == "false":
@@ -231,6 +244,16 @@ def post_create_team():
         else:
             members = []
         cursor.execute(f"INSERT INTO teams (`name`, `description`, `guild_id`, `members`, `contact`, `status`, `requests`) VALUES ('{form['team_name']}', '{form['team_des']}', '{form['guild_id']}', '{members}', '{form['email']}', 'pending', '{json.dumps([])}')")
+        cursor.execute(f"SELECT * FROM competitions WHERE `guild_id`='{teams[0]['guild_id']}'")
+        guild = cursor.fetchone()
+        text = client.get_guild(int(guild["guild_id"])).get_channel(int(guild["manager_chat"]))
+
+        embed = discord_bot.embeds.Embed(
+            title="Team soll erstellt werden",
+            description=f"{discord.fetch_user().name} möchte das Team {form['team_name']} erstellen.",
+            colour=discord_bot.colour.Colour.purple()
+        )
+        asyncio.run_coroutine_threadsafe(text.send(embed=embed), client.loop)
     mysql.commit()
 
     # return render_template("create_team_success.html", guild=client.get_guild(int(request.form["guild_id"])))
@@ -292,7 +315,8 @@ def confirm_team():
 
         embed = discord_bot.embeds.Embed(
             title="Team erstellt",
-            description=f"Ein wunderschöner Tag. Dein Team '{team['name']}' wurde gerade freigeschaltet!"
+            description=f"Ein wunderschöner Tag. Dein Team '{team['name']}' wurde gerade freigeschaltet!",
+            colour=discord_bot.colour.Colour.green()
         )
         try:
             asyncio.run_coroutine_threadsafe(user.send(embed=embed), client.loop)

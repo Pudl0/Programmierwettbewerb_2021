@@ -73,7 +73,7 @@
               {% for key in fields.keys() %}
               <div class="grid-x grid-padding-x">
                 <div class="cell shrink">{{ key }}</div>
-                <div class="cell auto">{{ fields[key] }}</div>
+                <div class="cell auto"><p>{{ fields[key]|safe }}</p></div>
               </div>
               <hr>
               {% endfor %}

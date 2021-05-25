@@ -2,8 +2,8 @@ import requests
 from iTechnious.statics import config
 from iTechnious.statics import secrets
 
-url = f"https://discord.com/api/v8/applications/{config.DISCORD_CLIENT_ID}/commands/"
-url = f"https://discord.com/api/v8/applications/{config.DISCORD_CLIENT_ID}/guilds/844218034666209280/commands"
+url = f"https://discord.com/api/v8/applications/{config.DISCORD_CLIENT_ID}/commands"
+# url = f"https://discord.com/api/v8/applications/{config.DISCORD_CLIENT_ID}/guilds/844218034666209280/commands"
 
 commands = [
     {
@@ -29,18 +29,6 @@ commands = [
         ]
     },
     {
-        "name": "remove_custom_fields",
-        "description": "Ein Beschreibungsfeld entfernen.",
-        "options": [
-            {
-                "name": "field_name",
-                "description": "Das Feld, dass du entfernen möchtest.",
-                "type": 3,
-                "required": True
-            }
-        ]
-    },
-    {
         "name": "description",
         "description": "Lege eine Beschreibung für deinen Server fest!",
         "options": [
@@ -58,12 +46,6 @@ commands = [
 headers = {
     "Authorization": f"Bot {secrets.DISCORD_BOT_TOKEN}"
 }
-"""
-# or a client credentials token for your app with the applications.commands.update scope
-headers = {
-    "Authorization": "Bearer abcdefg"
-}
-"""
 
 for json in commands:
     r = requests.post(url, headers=headers, json=json)

@@ -137,3 +137,7 @@
 #row div {
     display: inline;
 }
+
+hr {
+    max-width: 100%;
+}
