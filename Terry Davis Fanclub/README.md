@@ -12,7 +12,7 @@ umgesetzt in JavaScript mit [React](https://reactjs.org/).
 Voraussetzungen für den Build sind [Node](https://nodejs.org/en/) (``npm``)
 und [Maven](https://maven.apache.org/) (`mvn`). Im Hauptverzeichnis befindet sich ein Buildscript für
 Windows, ``build.cmd``. Bei Ausführung baut es das Backend und Frontend und speichert eine fertige Serverdatei inklusive
-Webinterface in ``/build``.
+Webinterface in ``/build``. Ein fertiger Build ist [hier](http://pauhull.de/spw21/latest-build.zip) zu finden.
 
 ### Erste Ausführung und Installation
 
@@ -130,7 +130,13 @@ Hier einige Features des Bots im Überblick:
 
 ![](https://i.imgur.com/qjqI2AD.png)
 ![](https://i.imgur.com/yWt7qgd.png)
-![](https://i.imgur.com/HNsmVUk.png)
+![](https://i.imgur.com/HNsmVUk.png) 
 ![](https://i.imgur.com/yal5ow7.png)
 ![](https://i.imgur.com/XKPB8j6.png)
-![](https://i.imgur.com/35asZWP.png)
+![](https://i.imgur.com/35asZWP.png) 
+![](https://i.imgur.com/gZyWBS7.png)
+![](https://i.imgur.com/jJWRqWY.png)
+![](https://i.imgur.com/qmyAOyb.png) 
+![](https://i.imgur.com/Zmk9tz1.png)
+![](https://i.imgur.com/gTzPtEx.png)
+![](https://i.imgur.com/u3aczKT.png)

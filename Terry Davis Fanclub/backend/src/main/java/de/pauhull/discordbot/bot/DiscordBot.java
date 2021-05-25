@@ -19,6 +19,7 @@ import discord4j.core.event.domain.guild.MemberJoinEvent;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.event.domain.message.ReactionAddEvent;
+import discord4j.core.event.domain.role.RoleUpdateEvent;
 import discord4j.core.object.Embed;
 import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.Message;
@@ -101,6 +102,7 @@ public class DiscordBot {
         client.getEventDispatcher().on(MessageCreateEvent.class).subscribe(new MessageCreateEventHandler());
         client.getEventDispatcher().on(ReactionAddEvent.class).subscribe(new ReactionAddEventHandler());
         client.getEventDispatcher().on(GuildDeleteEvent.class).subscribe(new GuildDeleteEventHandler());
+        client.getEventDispatcher().on(RoleUpdateEvent.class).subscribe(new RoleUpdateEventHandler());
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
         client.onDisconnect().block();

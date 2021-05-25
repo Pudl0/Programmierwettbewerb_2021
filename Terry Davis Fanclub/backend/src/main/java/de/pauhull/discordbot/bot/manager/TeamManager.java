@@ -11,6 +11,7 @@ import discord4j.core.object.entity.Role;
 import discord4j.rest.util.PermissionSet;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.IOException;
@@ -56,7 +57,7 @@ public class TeamManager {
         teams.addAll(Arrays.asList(teamArray));
     }
 
-    private void save() throws IOException {
+    public void save() throws IOException {
 
         String fileContent = DiscordBot.getInstance().getGson().toJson(teams.toArray(new Team[0]));
         Files.write(teamsFile.toPath(), fileContent.getBytes(StandardCharsets.UTF_8));
@@ -148,6 +149,7 @@ public class TeamManager {
     }
 
     @Getter
+    @Setter
     @AllArgsConstructor
     public static class Team {
         private String name;
