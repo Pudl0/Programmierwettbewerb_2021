@@ -115,6 +115,7 @@ public class Config {
         private String createTeam = "neuesteam";
         private String ticTacToe = "ttt";
         private String paste = "paste";
+        private String meme = "meme";
         private String helpDesc = "Alle Befehle auflisten \uD83D\uDCDC";
         private String joinDesc = "Team beitreten \uD83D\uDCBB";
         private String leaveDesc = "Momentanes Team verlassen \uD83D\uDEAA";
@@ -124,6 +125,7 @@ public class Config {
         private String createTeamDesc = "Neues Team erstellen \uD83D\uDCBE";
         private String ticTacToeDesc = "Tic Tac Toe spielen \uD83C\uDFAE";
         private String pasteDesc = "Paste erstellen \uD83D\uDCCB";
+        private String memeDesc = "Zufälliger Meme aus r/ProgrammerHumor \uD83C\uDFA4";
     }
 
     @AllArgsConstructor

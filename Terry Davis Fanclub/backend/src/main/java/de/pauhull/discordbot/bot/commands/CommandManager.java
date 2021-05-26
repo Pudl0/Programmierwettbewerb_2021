@@ -30,6 +30,7 @@ public class CommandManager {
         this.commands.add(new CreateTeamCommand());
         this.commands.add(new TicTacToeCommand());
         this.commands.add(new PasteCommand());
+        this.commands.add(new MemeCommand());
     }
 
     public void runCommand(MessageChannel channel, Member member, Message messageObject, String label, String[] args) {

@@ -126,6 +126,7 @@ Hier einige Features des Bots im Überblick:
 - Tic Tac Toe Minispiel
 - Eigene Befehle zur Textausgabe
 - Zufälligen Witz ausgeben (konfigurierbar)
+- Zufälliger [r/ProgrammingHumor](https://reddit.com/r/ProgrammingHumor/) Meme
 - Dark Mode
 
 ### Screenshots
@@ -137,7 +138,7 @@ Hier einige Features des Bots im Überblick:
 ![](https://i.imgur.com/XKPB8j6.png)
 ![](https://i.imgur.com/35asZWP.png)
 ![](https://i.imgur.com/cmCNUQC.png)
-![](https://i.imgur.com/gZyWBS7.png)
+![](https://i.imgur.com/yYarOUd.png)
 ![](https://i.imgur.com/jJWRqWY.png)
 ![](https://i.imgur.com/qmyAOyb.png)
 ![](https://i.imgur.com/Zmk9tz1.png)
