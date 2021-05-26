@@ -62,7 +62,7 @@
 #custom-fields .grid-x .cell {
     font-size: 20px;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
-
+    font-family: Arial, Helvetica, sans-serif;
 }
 #custom-fields hr {
     margin-top: 5px;
@@ -90,7 +90,7 @@
     margin-bottom: 10px;
 }
 
-.team {
+.team, #team {
     overflow: auto;
 
     border-radius: 10px;
@@ -140,4 +140,13 @@
 
 hr {
     max-width: 100%;
+}
+
+#team-name {
+    font-size: 25px;
+    padding-bottom: 10px;
+}
+
+.print {
+    margin-right: 30px;
 }

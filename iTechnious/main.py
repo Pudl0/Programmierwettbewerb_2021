@@ -217,6 +217,72 @@ def guild_admin(guild_id):
 
     return render_template("guild_admin.html", guild=client.get_guild(int(guild_id)), teams=teams, joins=joins)
 
+@app.route("/guilds/<guild_id>/signups/")
+@requires_authorization
+def guild_signups(guild_id):
+    try:
+        int(guild_id)
+    except ValueError:
+        return redirect(url_for("mainPage"))
+
+    if int(guild_id) not in [guild.id for guild in client.guilds]:
+        return redirect(url_for("mainPage"))
+
+    if not admin_checker(guild_id, discord.fetch_user().id):
+        flash("Keine Berechtigung!")
+        return redirect(url_for("guild_overview", guild_id=guild_id))
+
+    guild = client.get_guild(int(guild_id))
+
+    signups = []
+
+    with mysql.cursor() as cursor:
+        cursor.execute(f"SELECT * FROM competitions WHERE `guild_id`='{str(guild_id)}'")
+        res = cursor.fetchone()
+        description = res["description"]
+
+        cursor.execute(f"SELECT * FROM teams WHERE `guild_id`='{guild_id}'")
+        teams = cursor.fetchall()
+
+        for team in teams:
+            members = []
+            for member_id in json.loads(team["members"]):
+                cursor.execute(f"SELECT * FROM userdata WHERE `user_id`='{member_id}'")
+                member = cursor.fetchone()
+                if member is None:
+                    member = {
+                        "id": member_id,
+                        "first_name": asyncio.run_coroutine_threadsafe(client.fetch_user(int(member_id)), client.loop).result().name,
+                        "last_name": "",
+                        "email": "",
+                        "class": "",
+                        "extras": "Noch keine Daten angegeben. Discord Name wird angezeigt."
+                    }
+                if member["first_name"] == "":
+                    member["first_name"] = asyncio.run_coroutine_threadsafe(client.fetch_user(int(member["first_name"])), client.loop).result().name
+                    member["extras"] = "Noch kein Name angegeben. Discord Name wird angezeigt."
+
+                members.append(
+                    {
+                        "id": member["id"],
+                        "first_name": member["first_name"],
+                        "last_name": member["last_name"],
+                        "email": member["email"],
+                        "class": member["class"],
+                        "extras": member["extras"]
+                    }
+                )
+
+            signups.append(
+                {
+                    "name": team["name"],
+                    "status": team["status"],
+                    "members": members
+                }
+            )
+
+    return render_template("signups.html", signups=signups, guild=guild, description=description)
+
 @app.route("/create_team/", methods=["POST"])
 @requires_authorization
 def post_create_team():
