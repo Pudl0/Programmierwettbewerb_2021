@@ -3,7 +3,7 @@
     padding-top: 30px;
     padding-bottom: 30px;
 
-    background-color: #808080;
+    background-color: #b3b3b3;
     text-align: center;
 }
 
@@ -20,7 +20,7 @@
 }
 
 .help-item {
-    margin-top: 40px;
+    margin-top: 0px;
 }
 
 #faq ul li a {

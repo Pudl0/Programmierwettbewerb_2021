@@ -1,10 +1,12 @@
-import discord
-import json
 import asyncio
-import init
 import concurrent.futures
+import json
 
+import discord
+
+import init
 from globals import client, mysql
+
 
 @client.event
 async def on_ready():

@@ -1,5 +1,6 @@
 import discord
 import pymysql
+
 from statics import config
 
 intents = discord.Intents.default()

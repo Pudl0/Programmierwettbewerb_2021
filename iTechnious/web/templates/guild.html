@@ -7,6 +7,7 @@
     <title>FlaskHACS - {{ guild.name }}</title>
     <link rel="stylesheet" href="/css/foundation.min.css">
     <link rel="stylesheet" href="/css/guild.css">
+    <link rel="stylesheet" href="/js/animate.min.css">
   </head>
   <body>
     <div class="top-bar">
@@ -30,7 +31,7 @@
     <div id="guild-heading" class="grid-x">
       <div class="cell">
         <div class="grid-x">
-          <div id="guild-div" class="cell shrink">
+          <div id="guild-div" class="cell shrink animate__animated animate__bounceInLeft">
             <div class="grid-x">
               <div class="cell shrink" style="width: 100px;">
                 <div id="guild-picture"><img src="{{ guild.icon_url }}" alt=""></div>
@@ -50,7 +51,7 @@
             </div>
             
           </div>
-          <div id="description" class="cell auto">
+          <div id="description" class="cell auto animate__animated animate__bounceInRight">
             <p class="float-right">{{ description }}</p>
           </div>
         </div>
@@ -68,7 +69,7 @@
             </div>            
         </div> -->
         {% if fields != {} %}
-        <div class="cell">
+        <div class="cell animate__animated animate__bounceInLeft">
             <div id="custom-fields" class="float-left">
               {% for key in fields.keys() %}
               <div class="grid-x grid-padding-x">
@@ -82,10 +83,10 @@
         {% endif %}
     </div>
 
-    <div id="teams-text">
+    <div id="teams-text" class="animate__animated animate__fadeInLeft">
       Teams
     </div>
-    <div id="teams">
+    <div id="teams" class="animate__animated animate__fadeInLeft">
         {% if own_team != None and own_team.status == "valid" %}
         <h4>Dein Team</h4>
         <div class="team">

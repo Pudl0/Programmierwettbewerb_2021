@@ -1,28 +1,21 @@
-import asyncio
-import time
-
-import discord as discord_bot
-from discord_interactions import verify_key_decorator
-import importlib
 import _thread
+import importlib
 import os
-import json
-import logging
 import smtplib
 import ssl
+import time
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.utils import formatdate
 
+from discord_interactions import verify_key_decorator
 from flask import Flask, redirect, render_template, request, url_for, flash, jsonify
 from flask_discord import DiscordOAuth2Session, Unauthorized, requires_authorization
 
-import init
 import statics.config as config
 import statics.secrets as secrets
-from bot import client
-from globals import mysql
 from helpers import *
+from bot import client
 
 # logging.basicConfig(level=logging.DEBUG)
 
@@ -44,7 +37,7 @@ discord = DiscordOAuth2Session(app)
 print("################################")
 print("#  FlaskHACS Hackathon Manager #")
 print("#    -----------------------   #")
-print("#           Soenke K.          #")
+print("#           Sönke K.           #")
 print("################################")
 
 print("Routen werden registriert...")
@@ -85,8 +78,6 @@ def interaction():
                             }
                         })
     # res = asyncio.run(module.run(req, client=client))
-
-    print(req)
 
     res = module.run(req, client=client, options=option_level, mysql=mysql)
 
@@ -224,13 +215,11 @@ def guild_admin(guild_id):
                     username = user.name
                     joins[team["id"]].append({"name": username, "id": join})
 
-    print(joins)
     return render_template("guild_admin.html", guild=client.get_guild(int(guild_id)), teams=teams, joins=joins)
 
 @app.route("/create_team/", methods=["POST"])
 @requires_authorization
 def post_create_team():
-    print(request.form)
     form = request.form
 
     with mysql.cursor() as cursor:
@@ -294,8 +283,6 @@ def confirm_team():
         category = asyncio.run_coroutine_threadsafe(guild.create_category(team["name"]), client.loop).result()
         role = asyncio.run_coroutine_threadsafe(guild.create_role(name=team["name"], hoist=True, mentionable=True), client.loop).result()
 
-        print(guild.default_role)
-
         asyncio.run_coroutine_threadsafe(category.set_permissions(guild.default_role, view_channel=False), client.loop)
         asyncio.run_coroutine_threadsafe(category.set_permissions(role, view_channel=True), client.loop)
 
@@ -328,8 +315,6 @@ def confirm_team():
             member = asyncio.run_coroutine_threadsafe(guild.fetch_member(user.id), client.loop).result()
         except discord_bot.errors.NotFound:
             member = None
-
-        print(member)
 
         if member is not None:
             role = guild.get_role(int(team["team_role"]))
@@ -625,7 +610,6 @@ def contact():
 
 @app.route("/post_contact/", methods=["POST"])
 def contactPost():
-    print(request.form)
     message = request.form["message"]
     name = request.form["name"]
     emailaddr = request.form["email"]
@@ -638,8 +622,6 @@ def contactPost():
     msg["From"] = "FlaskHACS <%s>" % config.Mail.user + "@" + config.Mail.host
     msg["To"] = config.Mail.reciever
     msg["Date"] = formatdate(localtime=True)
-
-    print(request.form)
 
     with smtplib.SMTP_SSL(config.Mail.host, config.Mail.port, context=ssl.create_default_context()) as server:
         server.login(config.Mail.user, config.Mail.password)

@@ -1,4 +1,5 @@
 import requests
+
 from iTechnious.statics import config
 from iTechnious.statics import secrets
 
@@ -11,17 +12,17 @@ commands = [
         "description": "Ein bisschen Server Last erzeugen.",
     },
     {
-        "name": "custom_fields",
+        "name": "detail_felder",
         "description": "Eine Beschreibung für deinen Server erstellen.",
         "options": [
             {
-                "name": "field_name",
+                "name": "feld_name",
                 "description": "Was möchtest du beschreiben?",
                 "type": 3,
                 "required": True
             },
             {
-                "name": "content",
+                "name": "inhalt",
                 "description": "Beschreibe drauf los!",
                 "type": 3,
                 "required": True
@@ -29,13 +30,25 @@ commands = [
         ]
     },
     {
-        "name": "description",
+        "name": "beschreibung",
         "description": "Lege eine Beschreibung für deinen Server fest!",
         "options": [
             {
-                "name": "value",
+                "name": "text",
                 "description": "Schreibe drauf los!",
                 "type": 3,
+                "required": True
+            }
+        ]
+    },
+    {
+        "name": "extra_rollen",
+        "description": "Umschalter für Rollen, die sich Teilnehmer zuteilen können.",
+        "options": [
+            {
+                "name": "rolle",
+                "description": "Die Rolle, die umgeschaltet werden soll.",
+                "type": 8,
                 "required": True
             }
         ]
@@ -47,10 +60,17 @@ headers = {
     "Authorization": f"Bot {secrets.DISCORD_BOT_TOKEN}"
 }
 
+r = requests.get(url, headers=headers)
+for command in r.json():
+    r = requests.delete(url + "/" + command["id"], headers=headers)
+    print("deleted command " + command["name"])
+    print(r)
+    print()
+
 for json in commands:
     r = requests.post(url, headers=headers, json=json)
+    print("created command " + json["name"])
     print(r)
-    print(r.json())
 
 exit()
 

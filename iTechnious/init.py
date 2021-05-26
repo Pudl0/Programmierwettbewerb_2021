@@ -1,10 +1,9 @@
 import asyncio
 import time
+
 import discord
 
-import pymysql
 from globals import mysql, client
-
 from statics import config as conf
 
 
@@ -18,7 +17,8 @@ def init_db():
                        "description TEXT,"
                        "custom_fields TEXT,"
                        "manager_role VARCHAR(100),"
-                       "manager_chat VARCHAR(100)"
+                       "manager_chat VARCHAR(100),"
+                       "custom_roles TEXT"
                        ")")
 
         while not client.is_ready():
@@ -48,7 +48,7 @@ def init_db():
                 )
                 asyncio.run_coroutine_threadsafe(text.send(embed=embed), client.loop).result()
 
-                cursor.execute(f"INSERT INTO competitions (`guild_id`, `description`, `manager_role`, `manager_chat`, `custom_fields`) VALUES ('{guild.id}', ' ', '{role.id}', '{text.id}', '{{}}')")
+                cursor.execute(f"INSERT INTO competitions (`guild_id`, `description`, `manager_role`, `manager_chat`, `custom_fields`, `custom_roles`) VALUES ('{guild.id}', ' ', '{role.id}', '{text.id}', '{{}}', '[]')")
 
         # cursor.execute(f"CREATE TABLE IF NOT EXISTS `joins` ("
         #                "id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,"

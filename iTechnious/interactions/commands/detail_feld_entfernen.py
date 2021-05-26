@@ -2,24 +2,18 @@ import json
 
 import requests
 
-from iTechnious.interactions import response
 from iTechnious.helpers import admin_checker
+from iTechnious.interactions import response
 from iTechnious.statics import config, secrets
 
+
 def run(req, client=None, options=None, mysql=None):
-    field = [option["value"] for option in options if option["name"] == "field_name"][0]
+    field = [option["value"] for option in options if option["name"] == "feld_name"][0]
     guild_id = int(req["guild_id"])
     user_id = int(req["member"]["user"]["id"])
 
     if not admin_checker(guild_id, user_id):
-        return {"type": 4,
-                "data": {
-                    "tts": False,
-                    "content": "Ähm, nein...du musst Verwalter sein!",
-                    "embeds": [],
-                    "allowed_mentions": []
-                    }
-                }
+        return response.get_unauthorized()
 
     with mysql.cursor() as cursor:
         cursor.execute(f"SELECT * FROM competitions WHERE `guild_id`='{guild_id}'")
@@ -58,11 +52,11 @@ def run(req, client=None, options=None, mysql=None):
             ]
         },
         {
-            "name": "remove_custom_fields",
+            "name": "detail_feld_entfernen",
             "description": "Ein Beschreibungsfeld entfernen.",
             "options": [
                 {
-                    "name": "field_name",
+                    "name": "feld_name",
                     "description": "Das Feld, dass du entfernen möchtest.",
                     "type": 3,
                     "required": True,
@@ -78,13 +72,5 @@ def run(req, client=None, options=None, mysql=None):
 
     for command in commands:
         r = requests.post(url, headers=headers, json=command)
-        print(r, r.json())
 
-    return {"type": 4,
-            "data": {
-                "tts": False,
-                "content": response.get_ok(),
-                "embeds": [],
-                "allowed_mentions": []
-                }
-            }
+    return response.get_ok()

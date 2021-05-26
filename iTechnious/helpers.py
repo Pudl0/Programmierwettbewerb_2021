@@ -1,7 +1,10 @@
 import asyncio
-import discord as discord_bot
 import json
+
+import discord as discord_bot
+
 from globals import mysql, client
+
 
 def admin_checker(guild_id, user_id):
     with mysql.cursor() as cursor:
