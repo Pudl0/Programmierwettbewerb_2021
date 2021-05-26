@@ -60,7 +60,8 @@ Der Server hat eine Konfigurationsdatei ``config.json`` generiert. Sie sollte wi
 ```
 
 Hier lässt sich der Bot genauer anpassen. Die wichtigste Einstellung ist ``discord.token``: Hier muss der Bot-Token
-eingetragen werden, der auf dem [Discord Developer Portal](https://discord.com/developers) erstellt wurde.
+eingetragen werden, der auf dem [Discord Developer Portal](https://discord.com/developers) erstellt wurde. **Wichtig**:
+Alle Intents müssen für diesen Bot aktiviert sein, oder er startet nicht!
 
 ``webConsole.port`` beinhaltet den Port (TCP), unter dem das Webinterface erreichbar sein wird. Für einige Funktionen
 ist es wichtig, dass dieser Port öffentlich ist.
