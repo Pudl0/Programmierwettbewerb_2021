@@ -10,7 +10,7 @@
         <button class="close-button" aria-label="Close alert" type="button" data-close>
           <span aria-hidden="true">&times;</span>
         </button>
-        <p>{{ message }}</p>
+        <p>{{ message|safe }}</p>
       </div>
       {% endfor %}
     {% endif %}

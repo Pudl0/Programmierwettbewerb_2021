@@ -22,7 +22,7 @@ def run(req, client=None, options=None, mysql=None):
         fields = json.loads(guild["custom_fields"])
         fields[field] = content
         fields_json = fields
-        fields = json.dumps(fields)
+        fields = json.dumps(fields, ensure_ascii=False).encode('utf8').decode()
         cursor.execute(f"UPDATE competitions SET `custom_fields`='{fields}' WHERE `guild_id`='{guild_id}'")
     mysql.commit()
 

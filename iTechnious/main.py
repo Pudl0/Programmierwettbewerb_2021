@@ -233,7 +233,7 @@ def post_create_team():
         else:
             members = []
         cursor.execute(f"INSERT INTO teams (`name`, `description`, `guild_id`, `members`, `contact`, `status`, `requests`) VALUES ('{form['team_name']}', '{form['team_des']}', '{form['guild_id']}', '{members}', '{form['email']}', 'pending', '{json.dumps([])}')")
-        cursor.execute(f"SELECT * FROM competitions WHERE `guild_id`='{teams[0]['guild_id']}'")
+        cursor.execute(f"SELECT * FROM competitions WHERE `guild_id`='{form['guild_id']}'")
         guild = cursor.fetchone()
         text = client.get_guild(int(guild["guild_id"])).get_channel(int(guild["manager_chat"]))
 
@@ -592,18 +592,6 @@ def leave():
     flash("Du hast das Team verlassen.")
     return redirect(url_for("guild_overview", guild_id=team["guild_id"]))
 
-@app.route("/login/")
-def login():
-    return discord.create_session()
-@app.errorhandler(Unauthorized)
-def redirect_unauthorized(e):
-    return redirect(url_for("login"))
-
-@app.route("/callback/")
-def callback():
-    discord.callback()
-    return redirect(url_for("mainPage"))
-
 @app.route("/contact/")
 def contact():
     return render_template("contact.html")
@@ -629,6 +617,58 @@ def contactPost():
         server.close()
 
     flash("Wir haben deine Nachricht erhalten. Wir melden uns demnächst unter der angegebenen E-Mail Adresse.")
+    return redirect(url_for("mainPage"))
+
+@app.route("/personal_infos/")
+@requires_authorization
+def personal_infos():
+    with mysql.cursor() as cursor:
+        cursor.execute(f"SELECT * FROM userdata WHERE `user_id`='{discord.fetch_user().id}'")
+        data = cursor.fetchone()
+    return render_template("personal_infos.html", data=data)
+
+@app.route("/post_personal_infos/", methods=["POST"])
+@requires_authorization
+def post_personal_infos():
+    form = request.form
+    user = discord.fetch_user()
+    user_id = user.id
+    with mysql.cursor() as cursor:
+        if cursor.execute(f"SELECT * FROM userdata WHERE `user_id`='{user_id}'") == 0:
+            cursor.execute(f"INSERT INTO userdata (`user_id`, `first_name`, `last_name`, `email`, `class`, `extras`) "
+                           f"VALUES ("
+                           f"'{user_id}',"
+                           f"'{form['first_name']}',"
+                           f"'{form['last_name']}',"
+                           f"'{form['email']}',"
+                           f"'{form['class']}',"
+                           f"'{form['extras']}'"
+                           f")")
+        else:
+            cursor.execute(f"UPDATE userdata "
+                           f"SET "
+                           f"`first_name`='{form['first_name']}',"
+                           f"`last_name`='{form['last_name']}',"
+                           f"`email`='{form['email']}',"
+                           f"`class`='{form['class']}',"
+                           f"`extras`='{form['extras']}' "
+                           f"WHERE `user_id`='{user_id}'")
+    mysql.commit()
+
+    flash("Wir haben deine Informationen aktualisiert. Vielen Dank!")
+    return redirect(url_for("mainPage"))
+
+@app.route("/login/")
+def login():
+    return discord.create_session()
+@app.errorhandler(Unauthorized)
+def redirect_unauthorized(e):
+    flash(f"Bitte klicke <a href='{request.url}'>hier</a>, um auf die gewünschte Seite zu gelangen.")
+    return redirect(url_for("login"))
+
+@app.route("/callback/")
+def callback():
+    discord.callback()
     return redirect(url_for("mainPage"))
 
 @app.after_request

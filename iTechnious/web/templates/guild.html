@@ -38,7 +38,7 @@
               </div>
               <div class="cell auto" id="guild-name-invite">
                 <div id="guild-name">{{ guild.name }}</div>
-                <div id="guild-invite"><a href="{{ invite.url }}">{{ invite.url }}</a></div>
+                <div id="guild-invite"><a href="{{ invite.url }}" target="_blank">{{ invite.url }}</a></div>
               </div>
               <div id="guild-buttons" class="cell">
                 {% if own_team == None %}
@@ -83,10 +83,10 @@
         {% endif %}
     </div>
 
-    <div id="teams-text" class="animate__animated animate__fadeInLeft">
+    <div id="teams-text" class="">
       Teams
     </div>
-    <div id="teams" class="animate__animated animate__fadeInLeft">
+    <div id="teams" class="">
         {% if own_team != None and own_team.status == "valid" %}
         <h4>Dein Team</h4>
         <div class="team">

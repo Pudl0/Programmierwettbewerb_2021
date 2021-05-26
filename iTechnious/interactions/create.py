@@ -1,3 +1,5 @@
+import time
+
 import requests
 
 from iTechnious.statics import config
@@ -52,6 +54,14 @@ commands = [
                 "required": True
             }
         ]
+    },
+    {
+        "name": "alles_ist_kaputt",
+        "description": "Wieder mal alles kaputt gegangen? Lass dich ein wenig aufheitern!"
+    },
+    {
+        "name": "link",
+        "description": "Hier der Link zur Wettbewerbs Übesicht!"
     }
 ]
 
@@ -61,13 +71,17 @@ headers = {
 }
 
 r = requests.get(url, headers=headers)
+
 for command in r.json():
+    continue
+    time.sleep(3)
     r = requests.delete(url + "/" + command["id"], headers=headers)
     print("deleted command " + command["name"])
     print(r)
     print()
 
 for json in commands:
+    time.sleep(10)
     r = requests.post(url, headers=headers, json=json)
     print("created command " + json["name"])
     print(r)
