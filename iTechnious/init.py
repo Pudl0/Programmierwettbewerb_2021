@@ -72,6 +72,16 @@ def init_db():
                        "team_role VARCHAR(100)"
                        ")")
 
+        cursor.execute("CREATE TABLE IF NOT EXISTS `userdata` ("
+                       "id INT PRIMARY KEY NOT NULL AUTO_INCREMENT,"
+                       "user_id VARCHAR(100),"
+                       "first_name VARCHAR(255),"
+                       "last_name VARCHAR(255),"
+                       "email VARCHAR(255),"
+                       "class VARCHAR(100),"
+                       "extras TEXT"
+                       ")")
+
         print()
         mysql.commit()
 
