@@ -128,7 +128,7 @@ function Home() {
                     {botName}
                     <span className="discriminator">#{info.discriminator}</span><Badge variant="success">ONLINE</Badge>
                     <br/>
-                    <a href={`https://discord.com/oauth2/authorize?client_id=${info.clientId}&scope=bot&permissions=8589934591`}
+                    <a href={`https://discord.com/oauth2/authorize?client_id=${info.clientId}&scope=bot&permissions=8`}
                        target="_blank" rel="noreferrer">
                         <Button variant="primary" size="sm"><Plus/>Zu Server hinzufügen</Button>
                     </a>
