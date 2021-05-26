@@ -48,6 +48,9 @@ public class Api {
         handlers.put("applications/get", new ApplicationsGetHandler());
         handlers.put("applications/get/csv/{}", new ApplicationsGetCsvHandler());
         handlers.put("applications/delete", new ApplicationsDeleteHandler());
+        handlers.put("customcommand/add", new CustomCommandAddHandler());
+        handlers.put("customcommand/get", new CustomCommandGetHandler());
+        handlers.put("customcommand/delete/{}", new CustomCommandDeleteHandler());
     }
 
     public String handleRequest(String[] pathArr, Session session, HttpExchange httpExchange) {

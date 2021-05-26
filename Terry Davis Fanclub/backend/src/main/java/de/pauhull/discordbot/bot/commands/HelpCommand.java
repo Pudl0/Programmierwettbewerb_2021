@@ -5,6 +5,8 @@ import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.MessageChannel;
 
+import java.util.function.Consumer;
+
 public class HelpCommand implements Command {
 
     @Override
@@ -14,9 +16,9 @@ public class HelpCommand implements Command {
         String prefix = bot.getConfig().getCommands().getPrefix();
 
         StringBuilder builder = new StringBuilder(bot.getConfig().getMessages().getHelpMessage());
-        for (Command command : bot.getCommandManager().getCommands()) {
-            builder.append("\n").append(prefix).append(command.getLabel()).append(" - ").append(command.getDesc());
-        }
+        Consumer<Command> append = command -> builder.append("\n").append(prefix).append(command.getLabel()).append(" - ").append(command.getDesc());
+        bot.getCommandManager().getCommands().forEach(append);
+        bot.getCustomCommandManager().getCustomCommands().forEach(append);
 
         bot.sendMessageNeutral(channel, builder.toString());
     }

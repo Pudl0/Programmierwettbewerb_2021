@@ -41,7 +41,7 @@ function Home() {
                 });
         };
 
-        if (info.guilds.length > 0) {
+        if (info && info.guilds.length > 0) {
             servers = [];
             for (let guild of info.guilds) {
                 servers.push(<div className="guild">

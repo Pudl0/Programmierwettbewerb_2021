@@ -1,0 +1,24 @@
+
+.custom-commands {
+  .btn {
+    margin-top: 1em;
+  }
+
+  .list-group {
+    max-width: 40em;
+  }
+
+  .list-group-item {
+    .btn {
+      float: right;
+      margin: 0;
+      display: none;
+    }
+
+    &:hover {
+      .btn {
+        display: block;
+      }
+    }
+  }
+}

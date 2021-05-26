@@ -8,7 +8,6 @@ import java.util.stream.Stream;
 
 public class Game {
 
-
     @Getter
     private Player[] board;
     @Getter

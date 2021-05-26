@@ -1,5 +1,3 @@
-import React from "react"
-
 function Logout() {
 
     fetch("/api/logout", {

@@ -10,6 +10,7 @@ import Logout from "./pages/Logout";
 import Announcements from "./pages/Announcements";
 import Teams from "./pages/Teams";
 import Applications from "./pages/Applications";
+import CustomCommands from "./pages/CustomCommands";
 
 function App() {
 
@@ -80,6 +81,9 @@ function getApp(session) {
                                 <Nav.Link href="/applications">Anmeldungen</Nav.Link>
                             </Nav.Item>
                             <Nav.Item>
+                                <Nav.Link href="/customcommands">Eigene Befehle</Nav.Link>
+                            </Nav.Item>
+                            <Nav.Item>
                                 <Nav.Link href="/logout">Logout</Nav.Link>
                             </Nav.Item>
                         </Nav>
@@ -100,6 +104,9 @@ function getApp(session) {
                         </Route>
                         <Route exact path="/applications">
                             <Applications/>
+                        </Route>
+                        <Route exact path="/customcommands">
+                            <CustomCommands/>
                         </Route>
                         <Route exact path="/logout">
                             <Logout/>

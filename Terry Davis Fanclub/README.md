@@ -123,6 +123,7 @@ Hier einige Features des Bots im Überblick:
 - Stack Overflow-Integration (Suchen nach Fragen per Befehl)
 - haste-server-Integration (Pastes erstellen per Befehl)
 - Tic Tac Toe Minispiel
+- Eigene Befehle zur Textausgabe
 - Zufälligen Witz ausgeben (konfigurierbar)
 - Dark Mode
 
@@ -130,13 +131,14 @@ Hier einige Features des Bots im Überblick:
 
 ![](https://i.imgur.com/qjqI2AD.png)
 ![](https://i.imgur.com/yWt7qgd.png)
-![](https://i.imgur.com/HNsmVUk.png) 
+![](https://i.imgur.com/HNsmVUk.png)
 ![](https://i.imgur.com/yal5ow7.png)
 ![](https://i.imgur.com/XKPB8j6.png)
-![](https://i.imgur.com/35asZWP.png) 
+![](https://i.imgur.com/35asZWP.png)
+![](https://i.imgur.com/cmCNUQC.png)
 ![](https://i.imgur.com/gZyWBS7.png)
 ![](https://i.imgur.com/jJWRqWY.png)
-![](https://i.imgur.com/qmyAOyb.png) 
+![](https://i.imgur.com/qmyAOyb.png)
 ![](https://i.imgur.com/Zmk9tz1.png)
 ![](https://i.imgur.com/gTzPtEx.png)
 ![](https://i.imgur.com/u3aczKT.png)

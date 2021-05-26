@@ -23,6 +23,11 @@ public class AnnounceHandler implements RequestHandler {
             JsonObject request = api.readRequestBody(httpExchange);
             String title = request.get("title").getAsString();
             String description = request.get("description").getAsString();
+
+            if (title.isEmpty() && description.isEmpty()) {
+                return api.getGson().toJson(new SuccessResponse(false));
+            }
+
             bot.inTextChannels(bot.getConfig().getChannels().getAnnouncements(), channel -> {
                 channel.createEmbed(spec -> {
                     spec.setTitle(title)

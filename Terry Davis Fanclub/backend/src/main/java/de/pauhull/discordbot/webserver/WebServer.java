@@ -48,7 +48,7 @@ public class WebServer implements HttpHandler {
         this.gson = gson;
         this.api = new Api(this);
         this.sessionManager = new SessionManager();
-        this.paths = Arrays.asList("/", "/announcements", "/home", "/login", "/logout", "/settings", "/teams", "/applications");
+        this.paths = Arrays.asList("/", "/announcements", "/home", "/login", "/logout", "/settings", "/teams", "/applications", "/customcommands");
 
         try {
             this.startServer(port);

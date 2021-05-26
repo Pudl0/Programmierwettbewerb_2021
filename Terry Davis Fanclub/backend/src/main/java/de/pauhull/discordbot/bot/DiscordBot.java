@@ -6,6 +6,7 @@ import de.pauhull.discordbot.bot.commands.CommandManager;
 import de.pauhull.discordbot.bot.github.GithubChecker;
 import de.pauhull.discordbot.bot.handler.*;
 import de.pauhull.discordbot.bot.manager.ApplicationManager;
+import de.pauhull.discordbot.bot.manager.CustomCommandManager;
 import de.pauhull.discordbot.bot.manager.TeamManager;
 import de.pauhull.discordbot.bot.paste.HasteService;
 import de.pauhull.discordbot.bot.tictactoe.TicTacToe;
@@ -61,6 +62,8 @@ public class DiscordBot {
     @Getter
     private ApplicationManager applicationManager;
     @Getter
+    private CustomCommandManager customCommandManager;
+    @Getter
     private CommandManager commandManager;
     @Getter
     private List<String> jokes;
@@ -90,6 +93,7 @@ public class DiscordBot {
         this.applicationManager = new ApplicationManager();
         this.githubChecker = new GithubChecker();
         this.twitchChecker = new TwitchChecker();
+        this.customCommandManager = new CustomCommandManager();
         this.commandManager = new CommandManager();
         this.ticTacToe = new TicTacToe();
         this.jokes = loadJokes();

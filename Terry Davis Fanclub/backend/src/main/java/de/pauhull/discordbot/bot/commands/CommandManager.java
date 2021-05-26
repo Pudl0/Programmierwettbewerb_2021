@@ -42,6 +42,12 @@ public class CommandManager {
                 break;
             }
         }
+        for (Command check : bot.getCustomCommandManager().getCustomCommands()) {
+            if (check.getLabel().equalsIgnoreCase(label)) {
+                command = check;
+                break;
+            }
+        }
 
         if (command != null) {
             Command finalCommand = command;
