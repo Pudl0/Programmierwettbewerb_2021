@@ -15,7 +15,7 @@ public class Main {
 
     public static DiscordBot bot;
 
-    public static final String TOKEN = "ODQ0MTk4NTk2NjY4MjkzMTkx.YKO7NQ.E0HbGp0hOGmdWWBZruR7FvaP-8Y";
+    public static final String TOKEN = "PLATZHALTER";
 
     public static void main(String[] args) throws LoginException {
         JDA jda = JDABuilder.createDefault(TOKEN)
