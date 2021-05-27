@@ -74,4 +74,6 @@ async def on_member_join(member):
     kanal = bot.get_channel(845968435828752415)
     await kanal.send("Schön, dass du da bist, " + str(member.name)+ " ! Um dich anzumelden, gib einfach [!melde + dein Vorname + dein Nachname + dein Teamname] ein. Zwischen die Namen solltest du Leerzeichen setzen.")
 
-bot.run("ODQzODk3MzYwMjk5MDY1NDA0.YKKiqQ.1eqEOm04iPQxfbGrn4e4ZODep14")
+bot.run(
+#Placeholder
+)
