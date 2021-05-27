@@ -5,7 +5,7 @@ var config = require('../config.json');
 module.exports = {
     name: 'config',
     aliases: 'c',
-    execute(message, args, client) {
+    async execute(message, args, client) {
         async function log() {
             try {
                 const channellog = message.guild.channels.cache.get(config.ID[2].logid);
