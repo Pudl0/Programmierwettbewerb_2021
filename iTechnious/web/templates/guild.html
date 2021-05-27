@@ -1,0 +1,264 @@
+<!doctype html>
+<html class="no-js" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlaskHACS - {{ guild.name }}</title>
+    <link rel="stylesheet" href="/css/foundation.min.css">
+    <link rel="stylesheet" href="/css/guild.css">
+    <link rel="stylesheet" href="/js/animate.min.css">
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">FlaskHACS</li>
+          <li><a href="/">Start</a></li>
+          <li><a href="/help">Hilfe</a></li>
+          <li><a href="/about">Über</a></li>
+          <li><a href="/contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li class="menu-text">Wettbewerbs Team beitreten oder verwalten</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div id="guild-heading" class="grid-x">
+      <div class="cell">
+        <div class="grid-x">
+          <div id="guild-div" class="cell shrink animate__animated animate__bounceInLeft">
+            <div class="grid-x">
+              <div class="cell shrink" style="width: 100px;">
+                <div id="guild-picture"><img src="{{ guild.icon_url }}" alt=""></div>
+              </div>
+              <div class="cell auto" id="guild-name-invite">
+                <div id="guild-name">{{ guild.name }}</div>
+                <div id="guild-invite"><a href="{{ invite.url }}" target="_blank">{{ invite.url }}</a></div>
+              </div>
+              <div id="guild-buttons" class="cell">
+                {% if own_team == None %}
+                <a data-open="create-team-modal"><button type="button" class="button">Team erstellen</button></a>
+                {% endif %}
+                {% if admin == True %}
+                <a href="admin/" class="button">Admin Modus</a>
+                <a href="signups/" class="button">Anmeldungen</a>
+                {% endif %}
+              </div>
+            </div>
+            
+          </div>
+          <div id="description" class="cell auto animate__animated animate__bounceInRight">
+            <p class="float-right">{{ description }}</p>
+          </div>
+        </div>
+      </div>
+
+        <!--
+        <div class="cell" style="margin-top: 10px;">
+            <div id="guild-buttons" class="float-left">
+                {% if own_team == None %}
+                <a data-open="create-team-modal"><button type="button" class="button">Team erstellen</button></a>
+                {% endif %}
+                {% if admin == True %}
+                <a href="admin/" class="button">Admin Modus</a>
+                {% endif %}
+            </div>            
+        </div> -->
+        {% if fields != {} %}
+        <div class="cell animate__animated animate__bounceInLeft">
+            <div id="custom-fields" class="float-left">
+              {% for key in fields.keys() %}
+              <div class="grid-x grid-padding-x">
+                <div class="cell shrink">{{ key }}</div>
+                <div class="cell auto"><p>{{ fields[key]|safe }}</p></div>
+              </div>
+              <hr>
+              {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <div id="teams-text" class="">
+      Teams
+    </div>
+    <div id="teams" class="">
+        {% if own_team != None and own_team.status == "valid" %}
+        <h4>Dein Team</h4>
+        <div class="team">
+          <div class="row">
+            <div class="float-left">
+              <p class="team-name">{{ own_team["name"] }}</p>
+              {% if own_team["description"] != "" %}
+              <p class="team-des">{{ own_team["description"] }}</p>
+              {% endif %}
+            </div>
+            <div class="float-right">
+              <a data-open="leave-team-modal"><button type="button" class="alert button">Team verlassen</button></a>
+              {% if joins != [] %}
+              <br>
+              <hr>
+              <h5>Beitrittsanfragen</h5>
+              <div class="float-right">
+                <div id="join-request">
+                  {% for join in joins %}
+                    <div class="join-request-with-name">
+                      <p>{{ join.name }}</p>
+                      <div class="float-right">
+                        <form action="/accept_join/" method="post" class="join-accept-form">
+                          <input type="hidden" name="team_id" value="{{ own_team.id }}">
+                          <input type="hidden" name="user_id" value="{{ join.id }}">
+                          <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                          <input type="hidden" name="admin" value="false">
+                          <button class="success button" type="submit" style="margin: 0;">Annehmen</button>
+                        </form>
+                        <form action="/reject_join/" method="post" class="join-reject-form">
+                          <input type="hidden" name="team_id" value="{{ own_team.id }}">
+                          <input type="hidden" name="user_id" value="{{ join.id }}">
+                          <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                          <input type="hidden" name="admin" value="false">
+                          <button class="alert button" type="submit" style="margin: 0;">Ablehnen</button>
+                        </form>
+                      </div>
+                    </div>
+                    <hr>
+                  {% endfor %}
+                </div>
+              </div>
+              {% endif %}
+            </div>
+          </div>
+
+            
+        </div>
+        {% endif %}
+        <hr>
+        {% if teams != () %}
+        {% for team in teams %}
+        {% if team.status == "valid" and team.name != own_team.name%}
+        <div class="team">
+            <div class="float-left">
+                <p class="team-name">{{ team["name"] }}</p>
+                {% if team["description"] != "" %}
+                <p class="team-des">{{ team["description"] }}</p>
+                {% endif %}
+            </div>
+            {% if own_team == None %}
+            <div class="float-right">
+                <form action="/request_join/" method="post">
+                  <input type="hidden" name="guild_id" value="{{ guild.id }}">
+                  <input type="hidden" name="team_id" value="{{ team.id }}">
+                  <button type="submit" class="success button">Team beitreten</button>
+                </form>
+            </div>
+            {% endif %}
+            {% if own_team == team.id %}
+            <div class="float-right">
+                <a href="#"><button type="button" class="warning button">Angefragt</button></a>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% else %}
+        <p id="no-teams">Noch keine Teams...sei der Erste und erstelle dein Team!</p>
+        {% endif %}
+    </div>
+
+
+
+    <div class="reveal" id="leave-team-modal" data-reveal>
+      <h1>Team verlassen</h1>
+      <p>Du kannst danach bei jedem Team einen Antrag erstellen.</p>
+
+      <form action="/leave/" method="POST">
+        <input type="hidden" name="team_id" value="{{ own_team.id }}">
+        <button type="submit" class="alert button">Team verlassen</button>
+      </form>
+
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    
+    <div class="reveal" id="delete-team-modal" data-reveal>
+        <h1>Team löschen</h1>
+
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="reveal" id="invite-member-modal" data-reveal>
+        <h1>Mitglied einladen</h1>
+
+        <form action="/invite/" method="post">
+            <div class="row">
+                <label>
+                    Discord Name des Mitglieds
+                    <input type="text" name="user_id">
+                </label>
+            </div>
+            <input type="hidden" name="guild_id" value="{{ guild.id }}">
+            <input type="hidden" name="team_id" value="{{ own_team.id }}">
+            <input class="button" type="submit">
+        </form>
+
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="reveal" id="kick-member-modal" data-reveal>
+        <h1>Mitglied entfernen</h1>
+
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+          <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="reveal" id="create-team-modal" data-reveal>
+      <h4>Team erstellen</h4>
+      <form action="/create_team/" method="post">
+          <div class="row">
+              <label>
+                  Teamname
+                  <input type="text" name="team_name">
+              </label>
+          </div>
+          <div class="row">
+              <label>
+                  Beschreibung
+                  <input type="text" name="team_des">
+              </label>
+          </div>
+          <div class="row">
+              <label>
+                  Kontakt
+                  <input type="email" name="email">
+              </label>
+          </div>
+          <input type="hidden" name="guild_id" value="{{ guild.id }}">
+          <input type="hidden" name="admin" value="false">
+          <input class="button" type="submit">
+      </form>
+      <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+      </button>
+  </div>
+
+  {% extends "flash.html" %}
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/what-input.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

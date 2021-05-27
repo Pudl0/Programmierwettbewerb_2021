@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FlaskHACS ist kaputt</title>
+    <link rel="stylesheet" href="/css/500.css">
+    <link href="https://fonts.googleapis.com/css?family=Encode+Sans+Semi+Condensed:100,200,300,400" rel="stylesheet">
+</head>
+<body class="loading">
+  <h1>500</h1>
+  <h2>Serverfehler aufgetreten  😭 </h2>
+  <div class="gears">
+    <div class="gear one">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <div class="gear two">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+    <div class="gear three">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+  </div>
+  <br><br><br><br><br><br><br><br><br><br>
+  <h2>Tja, das ist nicht so gut gelaufen...</h2>
+  <h2>Du hast uns da in eine unvorhergesehene Situation gebracht. Leider können wir dir nur die <a href="/">Startseite</a> anbieten.</h2>
+  <br><br><br>
+  <h2>{{ e }}</h2>
+  <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+</body>
+
+<script>
+    $(function() {
+  setTimeout(function(){
+    $('body').removeClass('loading');
+  }, 1000);
+});
+
+</script>
+</html>
