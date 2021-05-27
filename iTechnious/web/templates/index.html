@@ -1,0 +1,83 @@
+<!doctype html>
+<html class="no-js" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlaskHACS - Start</title>
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+
+<link rel="manifest" href="/site.webmanifest">
+    <link rel="stylesheet" href="/css/foundation.min.css">
+    <link rel="stylesheet" href="/css/index.css">
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">FlaskHACS</li>
+          <li><a target="_blank" href="https://discord.com/api/oauth2/authorize?client_id={{ bot.user.id }}&permissions=8&scope=bot applications.commands">Server Anmelden</a></li>
+          <li class="has-submenu">
+              <a href="#0">Wettbewerb auswählen</a>
+              <ul class="submenu menu vertical" data-submenu>
+                {% if logged_in == True %}
+                  {% if bot.guilds != [] %}
+                    {% for guild in bot.guilds %}
+                    <li><a href="/guilds/{{ guild.id }}/">{{ guild.name }}</a></li>
+                    {% endfor %}
+                  {% else %}
+                    <li><p>Noch kein Event gestartet. Melde jetzt einen Server an!</a></p></li>
+                  {% endif %}
+                {% else %}
+                <li><a href="/login">Zuerst einloggen!</a></li>
+                {% endif %}
+              </ul>
+          </li>
+          <li><a href="/help">Hilfe</a></li>
+          <li><a href="/about">Über</a></li>
+          <li><a href="/contact">Kontakt</a></li>
+          <li><a href="/personal_infos">Informationen bearbeiten</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li class="menu-text">Einen Wettbewerbs Server auswählen</li>
+        </ul>
+      </div>
+    </div>
+
+    <div id="head">
+      <h2 class="animate__animated animate__bounceInLeft">Willkommen bei FlaskHACS!</h2>
+      <p class="animate__animated animate__bounceInRight">Die einfache Hackathon Verwaltung</p>
+    </div>
+
+    <div id="intro" class="animate__animated animate__fadeInLeft">
+      <h3>Wo soll ich anfangen?</h3>
+      <p>
+        Bist du ein Teilnehmer? Dann suche dir einen Wettbewerb aus der Liste oben im Menü aus!
+      </p>
+      <p>
+        Du bist ein Veranstalter? Ist der Bot schon auf dem Server? Dann schaue im Event-Manager Chat nach! <br>
+        Der Bot ist noch nicht bei euch? Dann klicke auf "Server Anmelden" und lasse ihn auf deinen Event Server joinen!
+      </p>
+    </div>
+
+    <div id="intro" class="animate__animated animate__fadeInLeft">
+      <h3>Details gefällig?</h3>
+      <p>
+        Dann schaue doch auf unsere ausführliche <a href="/help">Hilfeseite</a> und <a href="/about">Infoseite</a>.
+      </p>
+    </div>
+
+    {% extends "flash.html" %}
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/what-input.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

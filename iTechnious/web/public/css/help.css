@@ -1,0 +1,28 @@
+#head {
+    margin: 0px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    background-color: #b3b3b3;
+    text-align: center;
+}
+
+#help, #faq {
+    margin: 0px;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    padding-left: 50px;
+    padding-right: 50px;
+
+
+    background-color: #a5a5a53a;
+}
+
+.help-item {
+    margin-top: 0px;
+}
+
+#faq ul li a {
+    font-size: 20px;
+}

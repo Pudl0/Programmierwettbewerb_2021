@@ -1,0 +1,40 @@
+<head>
+  <link rel="stylesheet" href="/js/animate.min.css">
+</head>
+
+<div id="flashes">
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      {% for message in messages %}
+      <div class="callout animate__animated animate__backInRight" data-closable>
+        <button class="close-button" aria-label="Close alert" type="button" data-close>
+          <span aria-hidden="true">&times;</span>
+        </button>
+        <p>{{ message|safe }}</p>
+      </div>
+      {% endfor %}
+    {% endif %}
+  {% endwith %}
+</div>
+
+<script src="/js/jquery-3.6.0.min.js"></script>
+<script src="/js/what-input.js"></script>
+<script src="/js/foundation.min.js"></script>
+<script>
+  $(document).foundation();
+</script>
+
+<style>
+  #flashes {
+    max-width: 30%;
+    min-width: 300px;
+    margin: 20px;
+    margin-top: 100px;
+    position:absolute;
+    top:0;
+    right:0;
+  }
+  .callout p {
+      margin-right: 30px;
+  }
+</style>

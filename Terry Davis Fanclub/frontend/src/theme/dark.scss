@@ -1,0 +1,38 @@
+.dark {
+
+  .modal-content {
+    background-color: #161616;
+    color: white;
+    border-color: #3c3c3c;
+  }
+
+  .modal-header, .modal-footer {
+    border-color: #222222 !important;
+  }
+
+  .close {
+    color: white !important;
+    text-shadow: none;
+  }
+
+  input[type=text], input[type=password], textarea {
+    background-color: #2b2b2b !important;
+    border-color: #414141;
+    color: white !important;
+
+    &:focus {
+      border-color: #565656;
+    }
+  }
+
+  .list-group-item {
+    background-color: #292929;
+    border-color: #5d5d5d;
+  }
+
+  .alert-success {
+    background-color: #22923a;
+    border-color: #0a2912;
+    color: white;
+  }
+}

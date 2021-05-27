@@ -1,0 +1,105 @@
+<!doctype html>
+<html class="no-js" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlaskHACS - {{ guild.name }}</title>
+    <link rel="stylesheet" href="/css/foundation.min.css">
+    <link rel="stylesheet" href="/css/guild.css">
+    <link rel="stylesheet" href="/js/animate.min.css">
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">FlaskHACS</li>
+          <li><a href="/">Start</a></li>
+          <li><a href="/help">Hilfe</a></li>
+          <li><a href="/about">Über</a></li>
+          <li><a href="/contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li class="menu-text">Wettbewerbs Team beitreten oder verwalten</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div id="guild-heading" class="grid-x">
+      <div class="cell">
+        <div class="grid-x">
+          <div id="guild-div" class="cell shrink animate__animated animate__bounceInLeft">
+            <div class="grid-x">
+              <div class="cell shrink" style="width: 100px;">
+                <div id="guild-picture"><img src="{{ guild.icon_url }}" alt=""></div>
+              </div>
+              <div class="cell auto" id="guild-name-invite">
+                <div id="guild-name">{{ guild.name }}</div>
+              </div>
+              <div id="guild-buttons" class="cell">
+                <a href="../" class="button">Übersicht</a>
+              </div>
+            </div>
+            
+          </div>
+          <div id="description" class="cell auto animate__animated animate__bounceInRight">
+            <p class="float-right"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="teams-text" class="">
+        Alle Anmeldungen
+        <div class="float-right">
+            <button class="print button" onclick="window.print();return false;">Drucken</button>
+        </div>
+    </div>
+    <div id="teams" class="">
+        {% for team in signups %}
+        <div id="team">
+            <div id="team-name">
+                {{ team.name }}
+                {% if team.status == "pending" %}<i>(nicht bestätigt)</i>{% endif %}
+            </div>
+            <div id="member-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Vorname</th>
+                            <th>Nachname</th>
+                            <th>E-Mail</th>
+                            <th>Klasse</th>
+                            <th>Sonstiges</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for member in team.members %}
+                        <tr>
+                            <td>{{ member.first_name }}</td>
+                            <td>{{ member.last_name }}</td>
+                            <td><a href="mailto:{{ member.email }}">{{ member.email }}</a></td>
+                            <td>{{ member.class }}</td>
+                            <td>{{ member.extras }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    {% extends "flash.html" %}
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/what-input.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>

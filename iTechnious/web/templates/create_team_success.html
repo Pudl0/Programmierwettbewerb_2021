@@ -1,0 +1,55 @@
+<!doctype html>
+<html class="no-js" lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>FlaskHACS - {{ guild.name }}</title>
+    <link rel="stylesheet" href="/css/foundation.min.css">
+    <link rel="stylesheet" href="/css/guild.css">
+    <link rel="stylesheet" href="/css/create_team.css">
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <ul class="dropdown menu" data-dropdown-menu>
+          <li class="menu-text">FlaskHACS</li>
+          <li><a href="/">Start</a></li>
+          <li><a href="#0">Hilfe</a></li>
+          <li><a href="#0">Über</a></li>
+          <li><a href="/contact">Kontakt</a></li>
+        </ul>
+      </div>
+      <div class="top-bar-right">
+        <ul class="menu">
+          <li class="menu-text">Wettbewerbs Team erstellen</li>
+        </ul>
+      </div>
+    </div>
+
+
+    <div id="guild-heading" class="grid-x">
+        <div class="cell">
+            <div id="guild-div" class="row float-left">
+                <div id="guild-picture" class="medium-8 large-4 columns"><img src="{{ guild.icon_url }}" alt=""></div>
+                <div id="guild-name" class="medium-4 large-8 columns">{{ guild.name }}</div>
+            </div>
+        </div>
+
+        <div class="cell" style="margin-top: 10px;">
+            <div id="teams-banner" class="float-right">
+                Team erstellen
+            </div>
+        </div>
+    </div>
+
+    <h3>Team erfolgreich erstellt!</h3>
+
+    <script src="/js/jquery-3.6.0.min.js"></script>
+    <script src="/js/what-input.js"></script>
+    <script src="/js/foundation.min.js"></script>
+    <script>
+      $(document).foundation();
+    </script>
+  </body>
+</html>
