@@ -69,7 +69,7 @@ public class TeamManager {
     public List<Team> getOwnedTeams(Member member) {
 
         return getTeams(member).stream()
-                .filter(team -> team.getOwner().equals(member.getId().asString()))
+                .filter(team -> team.getOwner() != null && team.getOwner().equals(member.getId().asString()))
                 .collect(Collectors.toList());
     }
 
