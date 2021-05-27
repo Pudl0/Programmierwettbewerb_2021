@@ -22,10 +22,11 @@ module.exports = {
                 if (message.member.hasPermission('ADMINISTRATOR')) {
                     configWrite.ID[0].welcomeid = args[1];
                     const json = JSON.stringify(configWrite);
-                    message.channel.send(`Welcomeid set, bot restart required!`)
-                    fs.writeFile("./config.json", json, (err) => {
+                    message.channel.send(`Welcomeid set... Bot is back in 15 sek.`)
+                    let wrote = await fs.writeFile("./config.json", json, (err) => {
                     })
                     log();
+                    process.exit(1);
                 } else {
                     message.reply(`Du hast nicht die passenden Berechtigungen!`)
                 }
@@ -35,10 +36,11 @@ module.exports = {
                 if (message.member.hasPermission('ADMINISTRATOR')) {
                     configWrite.ID[1].annid = args[1];
                     const json = JSON.stringify(configWrite);
-                    message.channel.send(`Announcement-id set, bot restart required!`)
-                    fs.writeFile("./config.json", json, (err) => {
+                    message.channel.send(`Announcement-id set... Bot is back in 15 sek.`)
+                    let wrote = await fs.writeFile("./config.json", json, (err) => {
                     })
                     log();
+                    process.exit(1);
                 } else {
                     message.reply(`Du hast nicht die passenden Berechtigungen!`)
                 }
@@ -47,10 +49,11 @@ module.exports = {
                 if (message.member.hasPermission('ADMINISTRATOR')) {
                     configWrite["OrganizerEmail"] = args[1];
                     const json = JSON.stringify(configWrite);
-                    message.channel.send(`Email for Application set, bot restart required!`)
-                    fs.writeFile("./config.json", json, (err) => {
+                    message.channel.send(`Email for Application set... Bot is back in 15 sek.`)
+                    let wrote = await fs.writeFile("./config.json", json, (err) => {
                     })
                     log();
+                    process.exit(1);
                 } else {
                     message.reply(`Du hast nicht die passenden Berechtigungen!`)
                 }
@@ -60,10 +63,11 @@ module.exports = {
 
                     configWrite.BOOL[0].OpenApplication = args[1];
                     const json = JSON.stringify(configWrite);
-                    message.channel.send(`OpenApplication now set, bot restart required!`)
-                    fs.writeFile("./config.json", json, (err) => {
+                    message.channel.send(`OpenApplication now set... Bot is back in 15 sek.`)
+                    let wrote = await fs.writeFile("./config.json", json, (err) => {
                     })
                     log();
+                    process.exit(1);
                 } else {
                     message.reply(`Du hast nicht die passenden Berechtigungen!`)
                 }
@@ -73,10 +77,11 @@ module.exports = {
 
                     configWrite.BOOL[1].OpenCreate = args[1];
                     const json = JSON.stringify(configWrite);
-                    message.channel.send(`OpenCreate now set, bot restart required!`)
-                    fs.writeFile("./config.json", json, (err) => {
+                    message.channel.send(`OpenCreate now set... Bot is back in 15 sek.`)
+                    let wrote = await fs.writeFile("./config.json", json, (err) => {
                     })
                     log();
+                    process.exit(1);
                 } else {
                     message.reply(`Du hast nicht die passenden Berechtigungen!`)
                 }
@@ -86,10 +91,11 @@ module.exports = {
 
                     configWrite.ID[3].ping = args[1];
                     const json = JSON.stringify(configWrite);
-                    message.channel.send(`Role ping for announcements now set, bot restart required!`)
-                    fs.writeFile("./config.json", json, (err) => {
+                    message.channel.send(`Role ping for announcements now set... Bot is back in 15 sek.`)
+                    let wrote = await fs.writeFile("./config.json", json, (err) => {
                     })
                     log();
+                    process.exit(1);
                 } else {
                     message.reply(`Du hast nicht die passenden Berechtigungen!`)
                 }
@@ -99,10 +105,11 @@ module.exports = {
 
                     configWrite.ID[2].logid = args[1];
                     const json = JSON.stringify(configWrite);
-                    message.channel.send(`Channel-id for bot log now set, bot restart required!`)
-                    fs.writeFile("./config.json", json, (err) => {
+                    message.channel.send(`Channel-id for bot log now set... Bot is back in 15 sek.`)
+                    let wrote = await fs.writeFile("./config.json", json, (err) => {
                     })
                     log();
+                    process.exit(1);
                 } else {
                     message.reply(`Du hast nicht die passenden Berechtigungen!`)
                 }

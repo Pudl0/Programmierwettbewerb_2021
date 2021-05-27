@@ -8,7 +8,7 @@ module.exports = {
       if (args[0].toLowerCase() == 'zahl') {
         let random = 1
         random = Math.floor(Math.random() * 10 + 1);
-        console.log(`random number is ${random}`)
+        //console.log(`random number is ${random}`)
         let filter = m => m.author.id == message.author.id
         //Waitng for message reply from the same author
 
@@ -36,8 +36,8 @@ module.exports = {
         let filter = m => m.author.id == message.author.id
         let temp = Math.floor(Math.random() * 3);
         let random = rps[temp]
-        console.log(`rps is ${rps}`)
-        console.log(`answer is ${random}`)
+        //console.log(`rps is ${rps}`)
+        //console.log(`answer is ${random}`)
         //Waiting for message reply from author
         message.channel.send(`Herzlich Wilkommen zum Klassiker Schere, Stein, Papier, gib bitte Schere Stein oder Papier ein je nachdem was du raten willst, du hast 30s Zeit!`).then(() => {
           message.channel.awaitMessages(filter, {

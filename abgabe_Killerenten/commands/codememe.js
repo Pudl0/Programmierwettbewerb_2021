@@ -6,10 +6,7 @@ module.exports = {
     name: 'codememe',
     aliases: ["cmeme", "pmeme"],
     async execute(message, args, client){
-        let subreddits = [
-            "ProgrammerHumor"
-        ]
-        let subreddit = subreddits[Math.floor(Math.random()*(subreddits.length))]
+        let subreddit = "ProgrammerHumor"
         let img = await api(subreddit)
         const Embed = new MessageEmbed()
         .setTitle(`Some Programming meme`)

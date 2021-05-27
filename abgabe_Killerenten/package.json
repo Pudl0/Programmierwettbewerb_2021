@@ -12,6 +12,7 @@
     "node": "^16.1.0",
     "node-fetch": "^2.6.1",
     "nodemailer": "^6.6.0",
+    "package.json": "^2.0.1",
     "yt-search": "^2.8.0",
     "ytdl-core": "^4.8.0"
   },
