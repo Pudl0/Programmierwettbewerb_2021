@@ -37,6 +37,11 @@ public class CreateTeamCommand implements Command {
             return;
         }
 
+        if (!bot.getTeamManager().getOwnedTeams(member).isEmpty()) {
+            bot.sendMessageError(channel, bot.getConfig().getMessages().getAlreadyOwnsTeam());
+            return;
+        }
+
         String color = colors[random.nextInt(colors.length)];
         int teamNameArgsLength = args.length;
         if (args.length > 1) {
@@ -63,9 +68,8 @@ public class CreateTeamCommand implements Command {
             return;
         }
 
-        TeamManager.Team team = bot.getTeamManager().addTeam(teamName, color, member.getId().asLong());
+        TeamManager.Team team = bot.getTeamManager().addTeam(teamName, color, member.getId().asString());
         if (team != null) {
-            bot.getTeamManager().assignTeam(member, team);
             bot.sendMessageSuccess(channel, bot.getConfig().getMessages().getTeamCreated());
         } else {
             bot.sendMessageError(channel, bot.getConfig().getMessages().getTeamAlreadyExists());

@@ -135,7 +135,7 @@ Hier einige Features des Bots im Überblick:
 ![](https://i.imgur.com/yWt7qgd.png)
 ![](https://i.imgur.com/HNsmVUk.png)
 ![](https://i.imgur.com/yal5ow7.png)
-![](https://i.imgur.com/XKPB8j6.png)
+![](https://i.imgur.com/urch9mw.png)
 ![](https://i.imgur.com/35asZWP.png)
 ![](https://i.imgur.com/cmCNUQC.png)
 ![](https://i.imgur.com/yYarOUd.png)

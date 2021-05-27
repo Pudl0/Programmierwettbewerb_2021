@@ -6,7 +6,6 @@ import discord4j.core.event.domain.role.RoleUpdateEvent;
 import discord4j.core.object.entity.Guild;
 import discord4j.core.object.entity.Role;
 
-import java.io.IOException;
 import java.util.function.Consumer;
 
 public class RoleUpdateEventHandler implements Consumer<RoleUpdateEvent> {
@@ -35,12 +34,8 @@ public class RoleUpdateEventHandler implements Consumer<RoleUpdateEvent> {
                 }).subscribe();
             });
 
-            try {
-                oldTeam.setName(event.getCurrent().getName());
-                bot.getTeamManager().save();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            oldTeam.setName(event.getCurrent().getName());
+            bot.getTeamManager().save();
         }
     }
 }

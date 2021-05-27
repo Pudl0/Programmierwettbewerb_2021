@@ -2,6 +2,7 @@ package de.pauhull.discordbot.bot.commands;
 
 import de.pauhull.discordbot.bot.DiscordBot;
 import de.pauhull.discordbot.bot.manager.TeamManager;
+import discord4j.common.util.Snowflake;
 import discord4j.core.object.entity.Member;
 import discord4j.core.object.entity.Message;
 import discord4j.core.object.entity.channel.MessageChannel;
@@ -16,7 +17,7 @@ public class JoinCommand implements Command {
         String prefix = bot.getConfig().getCommands().getPrefix();
 
         if (args.length < 1) {
-            bot.sendMessageError(channel, "Verwendung: " + prefix + getLabel() + " <Teamname>");
+            bot.sendMessageError(channel, "Verwendung: " + prefix + getLabel() + " <Team-Name>");
             return;
         }
 
@@ -39,18 +40,15 @@ public class JoinCommand implements Command {
             return;
         }
 
+        if (team.getMembers().contains(member.getId().asString())) {
+            bot.sendMessageError(channel, bot.getConfig().getMessages().getAlreadyInTeam());
+            return;
+        }
+
         if (team.getOwner() != null) {
 
-            Member owner = null;
-            for (Member possibleOwner : member.getGuild().block().getMembers().toIterable()) {
-                if (possibleOwner.getId().asLong() == team.getOwner()) {
-                    owner = possibleOwner;
-                    break;
-                }
-            }
-
-            if (owner == null || member.equals(owner)) {
-                bot.sendMessageError(channel, bot.getConfig().getMessages().getNoTeamJoin());
+            Member owner = member.getGuild().block().getMemberById(Snowflake.of(team.getOwner())).block();
+            if (owner == null) {
                 return;
             }
 
@@ -70,7 +68,7 @@ public class JoinCommand implements Command {
             return;
         }
 
-        bot.getTeamManager().assignTeam(member, team);
+        bot.getTeamManager().assignTeam(member.getId().asString(), team);
         bot.sendMessageSuccess(channel, String.format(bot.getConfig().getMessages().getTeamAssigned(), team.getName()));
     }
 

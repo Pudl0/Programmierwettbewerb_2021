@@ -6,13 +6,14 @@ import de.pauhull.discordbot.util.ColorUtil;
 import discord4j.core.event.domain.guild.GuildCreateEvent;
 import discord4j.core.object.PermissionOverwrite;
 import discord4j.core.object.entity.Guild;
+import discord4j.core.object.entity.Role;
 import discord4j.core.object.entity.channel.TextChannel;
 import discord4j.rest.util.Permission;
 import discord4j.rest.util.PermissionSet;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 public class GuildCreateEventHandler implements Consumer<GuildCreateEvent> {
@@ -20,35 +21,36 @@ public class GuildCreateEventHandler implements Consumer<GuildCreateEvent> {
     @Override
     public void accept(GuildCreateEvent event) {
 
+        DiscordBot bot = DiscordBot.getInstance();
         Guild guild = event.getGuild();
-        createChannelIfNotExists(guild, DiscordBot.getInstance().getConfig().getChannels().getWelcome());
-        createChannelIfNotExists(guild, DiscordBot.getInstance().getConfig().getChannels().getAnnouncements());
 
-        DiscordBot.getInstance().getTeamManager().getTeams().forEach(team -> createOrEditTeam(guild, team));
+        createChannelIfNotExists(guild, bot.getConfig().getChannels().getWelcome());
+        createChannelIfNotExists(guild, bot.getConfig().getChannels().getAnnouncements());
+
+        createOrEditTeams(guild, bot.getTeamManager().getTeams());
     }
 
-    private void createOrEditTeam(Guild guild, TeamManager.Team team) {
+    private void createOrEditTeams(Guild guild, List<TeamManager.Team> teams) {
 
-        AtomicBoolean exists = new AtomicBoolean(false);
-        guild.getRoles()
-                .filter(role -> role.getName().equalsIgnoreCase(team.getName()))
-                .toIterable().forEach(role -> role.edit(spec -> {
-            exists.set(true);
-            spec.setName(team.getName())
-                    .setColor(ColorUtil.getDiscordColor(team.getColor()))
-                    .setHoist(true)
-                    .setMentionable(false)
-                    .setPermissions(PermissionSet.none());
-        }).block());
-
-        if (exists.get()) {
-            guild.createRole(spec -> {
-                spec.setName(team.getName());
-                spec.setColor(ColorUtil.getDiscordColor(team.getColor()));
-                spec.setHoist(true);
-                spec.setMentionable(false);
-                spec.setPermissions(PermissionSet.none());
-            }).block();
+        for (TeamManager.Team team : teams) {
+            List<Role> roles = guild.getRoles().filter(role -> role.getName().equalsIgnoreCase(team.getName())).collectList().block();
+            if (roles == null || roles.isEmpty()) {
+                guild.createRole(spec -> {
+                    spec.setName(team.getName());
+                    spec.setColor(ColorUtil.getDiscordColor(team.getColor()));
+                    spec.setHoist(true);
+                    spec.setMentionable(false);
+                    spec.setPermissions(PermissionSet.none());
+                }).block();
+            } else {
+                roles.forEach(role -> role.edit(spec -> {
+                    spec.setName(team.getName())
+                            .setColor(ColorUtil.getDiscordColor(team.getColor()))
+                            .setHoist(true)
+                            .setMentionable(false)
+                            .setPermissions(PermissionSet.none());
+                }));
+            }
         }
     }
 

@@ -22,12 +22,13 @@ public class CommandManager {
         this.executorService = Executors.newCachedThreadPool();
         this.commands = new ArrayList<>();
         this.commands.add(new HelpCommand());
+        this.commands.add(new TeamsCommand());
+        this.commands.add(new CreateTeamCommand());
         this.commands.add(new JoinCommand());
         this.commands.add(new LeaveCommand());
         this.commands.add(new JokeCommand());
         this.commands.add(new StackOverflowCommand());
         this.commands.add(new ApplicationCommand());
-        this.commands.add(new CreateTeamCommand());
         this.commands.add(new TicTacToeCommand());
         this.commands.add(new PasteCommand());
         this.commands.add(new MemeCommand());

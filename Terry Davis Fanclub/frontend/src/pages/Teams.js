@@ -1,5 +1,5 @@
 import "./Teams.res/style.scss"
-import {Button, Form, Modal} from "react-bootstrap";
+import {Button, Form, ListGroup, ListGroupItem, Modal} from "react-bootstrap";
 import {PlusCircle, TrashFill} from "react-bootstrap-icons";
 import React from "react";
 import {CirclePicker} from "react-color";
@@ -54,12 +54,12 @@ function Teams() {
     if (teams.length > 0) {
         teamList = [];
         for (let team of teams) {
+            let members = "Keine Mitglieder";
+            if (team.memberNames.length > 0) {
+                members = team.memberNames.join(", ");
+            }
             teamList.push(
-                <div className="team">
-                    <div className="color" style={{backgroundColor: team.color}}/>
-                    <h4>
-                        {team.name}
-                    </h4>
+                <ListGroupItem className="team">
                     <Button variant="danger" size="sm" onClick={() => {
                         fetch("/api/teams/delete", {
                             method: "POST",
@@ -67,9 +67,19 @@ function Teams() {
                             body: JSON.stringify(team)
                         }).then(fetchTeams);
                     }}><TrashFill/></Button>
-                </div>
+                    <div className="color" style={{backgroundColor: team.color}}/>
+                    <h4>
+                        {team.name}
+                    </h4>
+                    <p>
+                        <strong>Besitzer:</strong> {team.ownerName}<br/>
+                        <strong>Mitglieder:</strong> {members}
+                    </p>
+                </ListGroupItem>
             );
         }
+
+        teamList = <ListGroup>{teamList}</ListGroup>;
     }
 
     return (<div className="teams">

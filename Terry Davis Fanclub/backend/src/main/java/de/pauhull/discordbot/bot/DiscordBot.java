@@ -17,6 +17,7 @@ import discord4j.core.GatewayDiscordClient;
 import discord4j.core.event.domain.guild.GuildCreateEvent;
 import discord4j.core.event.domain.guild.GuildDeleteEvent;
 import discord4j.core.event.domain.guild.MemberJoinEvent;
+import discord4j.core.event.domain.guild.MemberUpdateEvent;
 import discord4j.core.event.domain.lifecycle.ReadyEvent;
 import discord4j.core.event.domain.message.MessageCreateEvent;
 import discord4j.core.event.domain.message.ReactionAddEvent;
@@ -76,7 +77,8 @@ public class DiscordBot {
     public DiscordBot(Config config, Gson gson, Runnable onReady) {
 
         instance = this;
-        this.remoteAddress = RemoteAddressRetriever.getRemoteAddress();
+        this.config = config;
+        this.gson = gson;
 
         try {
             this.client = Objects.requireNonNull(DiscordClientBuilder.create(config.getDiscord().getToken())
@@ -91,8 +93,7 @@ public class DiscordBot {
             return;
         }
 
-        this.config = config;
-        this.gson = gson;
+        this.remoteAddress = RemoteAddressRetriever.getRemoteAddress();
         this.teamManager = new TeamManager();
         this.applicationManager = new ApplicationManager();
         this.githubChecker = new GithubChecker();
@@ -103,14 +104,15 @@ public class DiscordBot {
         this.jokes = loadJokes();
         this.hasteService = new HasteService();
 
-        client.getEventDispatcher().on(MemberJoinEvent.class).subscribe(new MemberJoinEventHandler());
-        client.getEventDispatcher().on(ReadyEvent.class).subscribe(new ReadyEventHandler());
-        client.getEventDispatcher().on(ReadyEvent.class).subscribe(e -> onReady.run());
-        client.getEventDispatcher().on(GuildCreateEvent.class).subscribe(new GuildCreateEventHandler());
         client.getEventDispatcher().on(MessageCreateEvent.class).subscribe(new MessageCreateEventHandler());
+        client.getEventDispatcher().on(MemberJoinEvent.class).subscribe(new MemberJoinEventHandler());
+        client.getEventDispatcher().on(GuildCreateEvent.class).subscribe(new GuildCreateEventHandler());
         client.getEventDispatcher().on(ReactionAddEvent.class).subscribe(new ReactionAddEventHandler());
         client.getEventDispatcher().on(GuildDeleteEvent.class).subscribe(new GuildDeleteEventHandler());
         client.getEventDispatcher().on(RoleUpdateEvent.class).subscribe(new RoleUpdateEventHandler());
+        client.getEventDispatcher().on(MemberUpdateEvent.class).subscribe(new MemberUpdateEventHandler());
+        client.getEventDispatcher().on(ReadyEvent.class).subscribe(new ReadyEventHandler());
+        client.getEventDispatcher().on(ReadyEvent.class).subscribe(e -> onReady.run());
 
         Runtime.getRuntime().addShutdownHook(new Thread(this::stop));
         client.onDisconnect().block();

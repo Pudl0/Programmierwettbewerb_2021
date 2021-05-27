@@ -38,7 +38,7 @@ public class ReactionAddEventHandler implements Consumer<ReactionAddEvent> {
                 if (reaction.equals("\uD83D\uDC4D") || reaction.equals("❌")) {
                     message.delete().block();
                     if (reaction.equals("\uD83D\uDC4D")) {
-                        bot.getTeamManager().assignTeam(joinRequest.getMember(), joinRequest.getTeam());
+                        bot.getTeamManager().assignTeam(joinRequest.getMember().getId().asString(), joinRequest.getTeam());
                         bot.sendMessageSuccess(message.getChannel().block(), String.format(bot.getConfig().getMessages().getRequestAccepted(),
                                 joinRequest.getMember().getNicknameMention(), joinRequest.getTeam().getName()));
                     } else {
