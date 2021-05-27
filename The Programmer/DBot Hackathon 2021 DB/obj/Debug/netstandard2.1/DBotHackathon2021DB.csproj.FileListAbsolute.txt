@@ -1,0 +1,9 @@
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\bin\Debug\netstandard2.1\DBotHackathon2021DB.deps.json
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\bin\Debug\netstandard2.1\DBotHackathon2021DB.dll
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\bin\Debug\netstandard2.1\DBotHackathon2021DB.pdb
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\obj\Debug\netstandard2.1\DBotHackathon2021DB.csprojAssemblyReference.cache
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\obj\Debug\netstandard2.1\DBotHackathon2021DB.AssemblyInfoInputs.cache
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\obj\Debug\netstandard2.1\DBotHackathon2021DB.AssemblyInfo.cs
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\obj\Debug\netstandard2.1\DBotHackathon2021DB.csproj.CoreCompileInputs.cache
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\obj\Debug\netstandard2.1\DBotHackathon2021DB.dll
+C:\Users\G\Programmierwettbewerb [Hackathon 2021]\Discord Bot\DBot Hackathon 2021 DB\obj\Debug\netstandard2.1\DBotHackathon2021DB.pdb
