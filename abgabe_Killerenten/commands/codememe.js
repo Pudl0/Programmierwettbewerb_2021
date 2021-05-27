@@ -10,7 +10,7 @@ module.exports = {
         let img = await api(subreddit)
         const Embed = new MessageEmbed()
         .setTitle(`Some Programming meme`)
-        .setURL(`https://reddit.rom/r/${subreddit}`)
+        .setURL(`https://reddit.com/r/${subreddit}`)
         .setColor('RANDOM')
         .setImage(img)
         message.channel.send(Embed)
