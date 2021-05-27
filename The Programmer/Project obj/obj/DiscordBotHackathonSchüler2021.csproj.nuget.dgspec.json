@@ -1,0 +1,251 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\Discord bot hackathon schüler 2021\\DiscordBotHackathonSchüler2021.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBot Hackathon 2021 DB\\DBotHackathon2021DB.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBot Hackathon 2021 DB\\DBotHackathon2021DB.csproj",
+        "projectName": "DBotHackathon2021DB",
+        "projectPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBot Hackathon 2021 DB\\DBotHackathon2021DB.csproj",
+        "packagesPath": "C:\\Users\\G\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBot Hackathon 2021 DB\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\G\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.emzi0767.com/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.1": {
+          "dependencies": {
+            "Microsoft.AspNetCore.Hosting": {
+              "target": "Package",
+              "version": "[2.2.7, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "System.ComponentModel.Annotations": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "NETStandard.Library": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBotHackathon2021DB.Migrations\\DBotHackathon2021DB.Migrations.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBotHackathon2021DB.Migrations\\DBotHackathon2021DB.Migrations.csproj",
+        "projectName": "DBotHackathon2021DB.Migrations",
+        "projectPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBotHackathon2021DB.Migrations\\DBotHackathon2021DB.Migrations.csproj",
+        "packagesPath": "C:\\Users\\G\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBotHackathon2021DB.Migrations\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\G\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.emzi0767.com/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBot Hackathon 2021 DB\\DBotHackathon2021DB.csproj": {
+                "projectPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBot Hackathon 2021 DB\\DBotHackathon2021DB.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore.Relational": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\Discord bot hackathon schüler 2021\\DiscordBotHackathonSchüler2021.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\Discord bot hackathon schüler 2021\\DiscordBotHackathonSchüler2021.csproj",
+        "projectName": "DiscordBotHackathonSchüler2021",
+        "projectPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\Discord bot hackathon schüler 2021\\DiscordBotHackathonSchüler2021.csproj",
+        "packagesPath": "C:\\Users\\G\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\Discord bot hackathon schüler 2021\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\G\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://nuget.emzi0767.com/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {
+              "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBot Hackathon 2021 DB\\DBotHackathon2021DB.csproj": {
+                "projectPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBot Hackathon 2021 DB\\DBotHackathon2021DB.csproj"
+              },
+              "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBotHackathon2021DB.Migrations\\DBotHackathon2021DB.Migrations.csproj": {
+                "projectPath": "C:\\Users\\G\\Programmierwettbewerb [Hackathon 2021]\\Discord Bot\\DBotHackathon2021DB.Migrations\\DBotHackathon2021DB.Migrations.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "DSharpPlus": {
+              "target": "Package",
+              "version": "[4.1.0-nightly-00862, )"
+            },
+            "DSharpPlus.CommandsNext": {
+              "target": "Package",
+              "version": "[4.1.0-nightly-00862, )"
+            },
+            "DSharpPlus.Interactivity": {
+              "target": "Package",
+              "version": "[4.1.0-nightly-00862, )"
+            },
+            "Microsoft.AspNetCore": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.6, )"
+            },
+            "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[3.1.3, )"
+            },
+            "Microsoft.Extensions.Hosting": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            },
+            "Microsoft.Extensions.Hosting.Abstractions": {
+              "target": "Package",
+              "version": "[5.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.301\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
