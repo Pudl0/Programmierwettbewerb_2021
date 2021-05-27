@@ -1,0 +1,44 @@
+
+.teams {
+  .team {
+
+    max-width: 40em;
+
+    .color {
+      width: 1.75em;
+      height: 1.75em;
+      float: left;
+      border-radius: 50%;
+    }
+
+    h4 {
+      float: left;
+      margin-left: 0.5em;
+      font-weight: normal;
+      font-size: 1.25em;
+    }
+
+    p {
+      clear: both;
+      margin-left: 2.5em;
+      margin-bottom: 0;
+    }
+
+    .btn {
+      display: none;
+      float: right;
+    }
+
+    &:hover {
+      .btn {
+        display: block;
+      }
+    }
+  }
+
+  .add-team {
+    float: left;
+    clear: both;
+    margin-top: 1em;
+  }
+}
