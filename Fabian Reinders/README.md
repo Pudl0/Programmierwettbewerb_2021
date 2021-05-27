@@ -32,18 +32,18 @@ Wenn eine Anmeldung abgeschickt ist, muss ein Admin sie erst annehmen. Wenn das 
 #### Discord Benachrichtigungen
 Um die von "Quack" eingeführte Tradition der "Rezeption" fortzuführen, hat mein Bot die Möglichkeit, einen Channel für Benachrichtigungen über Anmeldungen, Annahmen oder Teams einzurichten.
 ##### Anmeldung eingegangen
-<img width="400px" src="assets/screenshots/notification-new-application.png" />
+<img width="600px" src="assets/screenshots/notification-new-application.png" />
 
 ##### Anmeldung angenommen
-<img width="400px" src="assets/screenshots/notification-application-accepted.png" />
+<img width="600px" src="assets/screenshots/notification-application-accepted.png" />
 
 ##### Team angenommen
-<img width="400px" src="assets/screenshots/notification-team-accepted.png" />
+<img width="600px" src="assets/screenshots/notification-team-accepted.png" />
 
 #### Begrüßung neuer Nutzer
 Der Bot schickt automatisch eine Begrüßung in den Lobby-Channel, wenn ein neuer Nutzer dem Server beitritt.
 
-<img width="400px" src="assets/screenshots/welcome-message.png" />
+<img width="600px" src="assets/screenshots/welcome-message.png" />
 
 ## Einrichtung / Konfiguration des Bots
 ### Config-Datei
