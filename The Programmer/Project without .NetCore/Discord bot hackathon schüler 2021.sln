@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DiscordBotHackathonSchüler2021", "DiscordBotHackathonSchüler2021.csproj", "{E75A1995-E405-4F0D-8FC6-DD8C9D907E55}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBotHackathon2021DB", "..\DBot Hackathon 2021 DB\DBotHackathon2021DB.csproj", "{1A35164D-6C27-4F5A-B665-F8AAE2D2E20C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DBotHackathon2021DB.Migrations", "..\DBotHackathon2021DB.Migrations\DBotHackathon2021DB.Migrations.csproj", "{61D2937C-6020-4C5A-AD79-DCD1AE9A6028}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E75A1995-E405-4F0D-8FC6-DD8C9D907E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E75A1995-E405-4F0D-8FC6-DD8C9D907E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E75A1995-E405-4F0D-8FC6-DD8C9D907E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E75A1995-E405-4F0D-8FC6-DD8C9D907E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1A35164D-6C27-4F5A-B665-F8AAE2D2E20C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1A35164D-6C27-4F5A-B665-F8AAE2D2E20C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1A35164D-6C27-4F5A-B665-F8AAE2D2E20C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1A35164D-6C27-4F5A-B665-F8AAE2D2E20C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{61D2937C-6020-4C5A-AD79-DCD1AE9A6028}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{61D2937C-6020-4C5A-AD79-DCD1AE9A6028}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{61D2937C-6020-4C5A-AD79-DCD1AE9A6028}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{61D2937C-6020-4C5A-AD79-DCD1AE9A6028}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4B8BD792-6A85-4560-AC10-B843FA5D189B}
+	EndGlobalSection
+EndGlobal
