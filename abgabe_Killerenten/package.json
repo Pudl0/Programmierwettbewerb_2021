@@ -1,0 +1,38 @@
+{
+  "name": "hackathonkillerentenbot",
+  "version": "1.0.0",
+  "description": "This is the Bot for the Team \"Killerenten\".",
+  "main": "index.js",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "dotenv": "^9.0.2",
+    "fs": "0.0.1-security",
+    "html-to-text": "^7.1.1",
+    "imageapi.js": "^1.6.1",
+    "node": "^16.1.0",
+    "node-fetch": "^2.6.1",
+    "nodemailer": "^6.6.0",
+    "yt-search": "^2.8.0",
+    "ytdl-core": "^4.8.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TigerdieKatze/HackathonKillerentenBOT.git"
+  },
+  "keywords": [
+    "Bot",
+    "Hackathon",
+    "Discord",
+    "Discord.js"
+  ],
+  "author": "Killerenten",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TigerdieKatze/HackathonKillerentenBOT/issues"
+  },
+  "homepage": "https://github.com/TigerdieKatze/HackathonKillerentenBOT#readme"
+}
