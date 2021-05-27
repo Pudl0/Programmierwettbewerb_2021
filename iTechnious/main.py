@@ -47,6 +47,17 @@ print("Routen werden registriert...")
 def mainPage():
     return render_template("index.html", bot=client, logged_in=discord.authorized)
 
+def internal_server_error(e):
+    return render_template("500.html", e=e)
+
+def not_found(e):
+    flash("Diese Seite konnten wir leider nicht finden 😱")
+    return redirect(url_for("mainPage"))
+
+
+app.register_error_handler(500, f=internal_server_error)
+app.register_error_handler(404, f=not_found)
+
 @app.route("/interaction/", methods=["POST"])
 @verify_key_decorator(config.DISCORD_PUBLIC_KEY)
 def interaction():
@@ -259,7 +270,7 @@ def guild_signups(guild_id):
                         "extras": "Noch keine Daten angegeben. Discord Name wird angezeigt."
                     }
                 if member["first_name"] == "":
-                    member["first_name"] = asyncio.run_coroutine_threadsafe(client.fetch_user(int(member["first_name"])), client.loop).result().name
+                    member["first_name"] = asyncio.run_coroutine_threadsafe(client.fetch_user(int(member_id)), client.loop).result().name
                     member["extras"] = "Noch kein Name angegeben. Discord Name wird angezeigt."
 
                 members.append(
@@ -413,9 +424,11 @@ def delete_team():
                 category = text.category
 
                 asyncio.run_coroutine_threadsafe(text.edit(name="❌" + text.name), client.loop).result()
-                asyncio.run_coroutine_threadsafe(voice.edit(name="❌" + voice.name), client.loop).result()
+                # asyncio.run_coroutine_threadsafe(voice.edit(name="❌" + voice.name), client.loop).result()
+                asyncio.run_coroutine_threadsafe(voice.delete(), client.loop).result()
                 asyncio.run_coroutine_threadsafe(role.delete(), client.loop).result()
-                asyncio.run_coroutine_threadsafe(category.edit(name="❌" + category.name), client.loop).result()
+                # asyncio.run_coroutine_threadsafe(category.edit(name="❌" + category.name), client.loop).result()
+                asyncio.run_coroutine_threadsafe(category.delete(), client.loop).result()
 
             for user_id in json.loads(team["members"]):
                 user_id = int(user_id)
@@ -691,6 +704,13 @@ def personal_infos():
     with mysql.cursor() as cursor:
         cursor.execute(f"SELECT * FROM userdata WHERE `user_id`='{discord.fetch_user().id}'")
         data = cursor.fetchone()
+
+    if data is not None:
+        for key in data.keys():
+            if data[key] != "" and key not in ["id", "user_id"]:
+                flash("Wir haben deine bestehenden Daten eingefügt.")
+                break
+
     return render_template("personal_infos.html", data=data)
 
 @app.route("/post_personal_infos/", methods=["POST"])
@@ -729,13 +749,22 @@ def login():
     return discord.create_session()
 @app.errorhandler(Unauthorized)
 def redirect_unauthorized(e):
-    flash(f"Bitte klicke <a href='{request.url}'>hier</a>, um auf die gewünschte Seite zu gelangen.")
+    flash(f"Wir haben dich angemeldet!<br>Bitte klicke <a href='{request.url}'>hier</a>, um auf die gewünschte Seite zu gelangen.")
     return redirect(url_for("login"))
 
 @app.route("/callback/")
 def callback():
     discord.callback()
     return redirect(url_for("mainPage"))
+
+@app.route("/easter egg/")
+def easter_egg():
+    flash("Wirklich so verzweifelt?\nNa dann: <a href='/super_duper_secret_easter_egg_thing/'>Hier</a>")
+    return redirect(url_for("mainPage"))
+
+@app.route("/super_duper_secret_easter_egg_thing/")
+def super_secret():
+    return render_template("firework.html")
 
 @app.after_request
 def add_header(r):
