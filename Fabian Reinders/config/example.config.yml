@@ -1,0 +1,26 @@
+discord:
+    token: ''
+    client_id: ''
+    client_secret: ''
+    # Server ID des Servers, auf dem der Bot aktiv ist (wird für OAuth2 benötigt)
+    server_id: ''
+    # Vorzugsweise ein permanenter Link
+    # Wird Nutzern angeboten, die noch nicht auf dem Discord sind
+    invite_link: 'https://discord.gg/XXX'
+    # Prefix, der vor Commands geschrieben wird
+    prefix: '.'
+    # Die Channel-ID des Channels, in den die Willkommens-Nachrichten geschickt werden
+    lobby_channel_id: ''
+    # Die Channel-ID des Channels, in den Benachrichtigungen zu Anmeldungen und Teams geschickt werden
+    notifications_channel_id: ''
+    # Hier kann die Willkommens-Nachricht personalisiert werden
+    # //USER// = "Nutzermention", /// = Zeilenumbruch
+    welcome_message: '**Hey, //USER// 👋**/// **Willkommen auf dem Discord des Programmier-Wettbewerbs.**/// Schön, dass du da bist!'
+
+api:
+    # Adresse und Port, an den die API bindet; Keine Adresse = API läuft auf 0.0.0.0
+    address_and_port: ':5000'
+    # URL unter der die API erreichbar ist (http, https ist zu beachten)
+    api_url: 'http://localhost:5000'
+    # URL unter der das Web-Dashboard erreichbar ist (http, https ist zu beachten)
+    frontend_url: 'http://localhost:3000'
