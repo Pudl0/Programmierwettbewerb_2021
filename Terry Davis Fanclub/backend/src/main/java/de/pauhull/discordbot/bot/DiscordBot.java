@@ -35,7 +35,9 @@ import lombok.Setter;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.Consumer;
@@ -73,6 +75,8 @@ public class DiscordBot {
     private TicTacToe ticTacToe;
     @Getter
     private HasteService hasteService;
+    @Getter
+    private SimpleDateFormat format;
 
     public DiscordBot(Config config, Gson gson, Runnable onReady) {
 
@@ -93,6 +97,7 @@ public class DiscordBot {
             return;
         }
 
+        this.consolePrefix = "INFO";
         this.remoteAddress = RemoteAddressRetriever.getRemoteAddress();
         this.teamManager = new TeamManager();
         this.applicationManager = new ApplicationManager();
@@ -103,6 +108,7 @@ public class DiscordBot {
         this.ticTacToe = new TicTacToe();
         this.jokes = loadJokes();
         this.hasteService = new HasteService();
+        this.format = new SimpleDateFormat("HH:mm:ss");
 
         client.getEventDispatcher().on(MessageCreateEvent.class).subscribe(new MessageCreateEventHandler());
         client.getEventDispatcher().on(MemberJoinEvent.class).subscribe(new MemberJoinEventHandler());
@@ -153,8 +159,8 @@ public class DiscordBot {
         }).block();
     }
 
-    public void log(String message) {
-        System.out.printf("[%s] %s%n", consolePrefix, message);
+    public void log(String message, Object... args) {
+        System.out.printf("[%s %s] %s%n", format.format(new Date()), consolePrefix, String.format(message, args));
     }
 
     private void stop() {

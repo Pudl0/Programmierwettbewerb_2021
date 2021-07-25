@@ -27,6 +27,9 @@ public class TeamsDeleteHandler implements RequestHandler {
                 return api.getGson().toJson(new SuccessResponse(false));
             }
             boolean success = bot.getTeamManager().removeTeam(team);
+            if(success) {
+                bot.log("Team %s deleted", team.getName());
+            }
             return api.getGson().toJson(new SuccessResponse(success));
         }
 

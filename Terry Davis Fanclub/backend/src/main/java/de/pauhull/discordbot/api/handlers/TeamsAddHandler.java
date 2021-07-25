@@ -29,6 +29,9 @@ public class TeamsAddHandler implements RequestHandler {
             String color = json.get("color").getAsString();
 
             boolean success = bot.getTeamManager().addTeam(name, color, null) != null;
+            if(success) {
+                bot.log("Public team %s created", name);
+            }
             return api.getGson().toJson(new SuccessResponse(success));
         }
 

@@ -35,6 +35,7 @@ public class ConfigUpdateHandler implements RequestHandler {
         InstanceCreator<Config> creator = new InstanceUpdater<>(bot.getConfig());
         new GsonBuilder().registerTypeAdapter(Config.class, creator).create().fromJson(request, Config.class);
         bot.getConfig().save();
+        bot.log("Updated config");
 
         return api.getGson().toJson(new SuccessResponse(true));
     }

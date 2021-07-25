@@ -14,7 +14,6 @@ public class MemberJoinEventHandler implements Consumer<MemberJoinEvent> {
         DiscordBot bot = DiscordBot.getInstance();
         String welcomeChannel = bot.getConfig().getChannels().getWelcome();
         String welcomeMessage = String.format(bot.getConfig().getMessages().getWelcome(), event.getMember().getDisplayName());
-        bot.log(welcomeMessage);
 
         event.getGuild().block().getChannels()
                 .filter(channel -> (channel instanceof TextChannel && channel.getName().equalsIgnoreCase(welcomeChannel)))
