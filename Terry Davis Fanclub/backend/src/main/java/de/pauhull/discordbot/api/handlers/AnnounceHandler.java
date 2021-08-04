@@ -35,6 +35,8 @@ public class AnnounceHandler implements RequestHandler {
                 }).block();
             });
 
+            bot.log("Sent announcement");
+
             return api.getGson().toJson(new SuccessResponse(true));
         }
 

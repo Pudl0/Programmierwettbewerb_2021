@@ -31,7 +31,7 @@ public class TwitchChecker implements Runnable {
         try {
             this.subscribeToWebhook();
         } catch (IOException e) {
-            e.printStackTrace();
+            DiscordBot.getInstance().log("Couldn't subscribe to Twitch webhook: %s", e);
         }
     }
 

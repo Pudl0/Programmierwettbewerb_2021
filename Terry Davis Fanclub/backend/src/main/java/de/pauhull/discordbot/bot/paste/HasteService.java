@@ -18,13 +18,10 @@ import java.util.stream.Collectors;
 public class HasteService {
 
     private String url;
-    private ScheduledExecutorService executorService;
 
     public HasteService() {
 
         this.url = DiscordBot.getInstance().getConfig().getPaste().getUrl();
-        this.executorService = Executors.newSingleThreadScheduledExecutor();
-        this.executorService.scheduleAtFixedRate(this::keepAlive, 0, 1, TimeUnit.MINUTES);
     }
 
     public String paste(String content) {
@@ -50,19 +47,8 @@ public class HasteService {
                 return "";
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            DiscordBot.getInstance().log("Paste service unavailable: %s", e);
             return "";
-        }
-    }
-
-    // glitch.com free hosted apps need to be kept alive or they will go to sleep
-    private void keepAlive() {
-
-        try {
-            HttpURLConnection connection = (HttpURLConnection) new URL(url).openConnection();
-            connection.getResponseCode();
-        } catch (IOException ignored) {
-            // service down :(
         }
     }
 }

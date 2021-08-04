@@ -43,8 +43,9 @@ public class GithubChecker implements Runnable {
     @Override
     public void run() {
 
+        DiscordBot bot = DiscordBot.getInstance();
+
         try {
-            DiscordBot bot = DiscordBot.getInstance();
             Config config = bot.getConfig();
             String repoName = String.format("%s/%s", config.getGithub().getUser(), config.getGithub().getRepo());
             URL requestUrl = new URL(String.format("https://api.github.com/repos/%s/pulls", repoName));
@@ -99,7 +100,7 @@ public class GithubChecker implements Runnable {
             }
 
         } catch (IOException | ParseException e) {
-            e.printStackTrace();
+            bot.log("GitHub service unavailable: %s", e);
         }
     }
 }

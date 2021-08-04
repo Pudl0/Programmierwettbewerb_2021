@@ -21,6 +21,7 @@ public class PasteCommand implements Command {
         String content = String.join(" ", args);
         String url = bot.getHasteService().paste(content);
         bot.sendMessageSuccess(channel, String.format(bot.getConfig().getMessages().getSendLink(), url));
+        bot.log("Created paste %s", url);
     }
 
     @Override

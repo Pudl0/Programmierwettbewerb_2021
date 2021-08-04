@@ -154,6 +154,6 @@ public class Config {
     @NoArgsConstructor
     @Getter
     public static class Paste {
-        private String url = "http://paste.pauhull.de/";
+        private String url = "https://paste.pauhull.de/";
     }
 }

@@ -71,6 +71,7 @@ public class CreateTeamCommand implements Command {
         TeamManager.Team team = bot.getTeamManager().addTeam(teamName, color, member.getId().asString());
         if (team != null) {
             bot.sendMessageSuccess(channel, bot.getConfig().getMessages().getTeamCreated());
+            bot.log("Private team %s created", team.getName());
         } else {
             bot.sendMessageError(channel, bot.getConfig().getMessages().getTeamAlreadyExists());
         }

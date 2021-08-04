@@ -48,6 +48,7 @@ public class LeaveCommand implements Command {
 
         if (teamToRemove.getOwner() != null && member.getId().asString().equals(teamToRemove.getOwner())) {
             bot.getTeamManager().removeTeam(teamToRemove);
+            bot.log("Private team %s deleted", teamToRemove.getName());
             bot.sendMessageSuccess(channel, bot.getConfig().getMessages().getTeamDeleted());
         } else {
             bot.getTeamManager().unassignTeam(member, teamToRemove);
