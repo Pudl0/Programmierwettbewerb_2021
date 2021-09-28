@@ -1,7 +1,6 @@
 import { Box, Heading } from "@chakra-ui/layout"
 import { useContext, useEffect } from "react"
 import Team from "./Team"
-import { ApiAddress } from '../config'
 import { ApplicationTeamContext } from "../context/ApplicationTeamContext"
 
 const Teams = () => {
@@ -11,8 +10,7 @@ const Teams = () => {
         setApprovedTeams([])
         setPendingTeams([])
         
-        fetch(ApiAddress + "/api/team/list", {
-            mode: 'cors',
+        fetch("/api/team/list", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }

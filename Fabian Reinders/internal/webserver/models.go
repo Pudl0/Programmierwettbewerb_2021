@@ -1,4 +1,4 @@
-package api
+package webserver
 
 // Discord User in OAuth2 API
 type DiscordUser struct {
@@ -33,7 +33,7 @@ type SentenceRequest struct {
 // Ein Request, um sein Team auszuwählen oder zu wechseln
 type TeamSelectRequest struct {
 	// Discord UserID
-	UserID int `json:"user_id"`
+	UserID string `json:"user_id"`
 	// ID von dem Team, in das der Nutzer möchte
 	TeamID int `json:"team_id"`
 }

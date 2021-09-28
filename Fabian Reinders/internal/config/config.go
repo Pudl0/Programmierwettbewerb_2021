@@ -20,11 +20,10 @@ type Config struct {
 		WelcomeMessage         string `yaml:"welcome_message"`
 	} `yaml:"discord"`
 
-	API struct {
+	WebServer struct {
 		AddressAndPort string `yaml:"address_and_port"`
-		APIUrl         string `yaml:"api_url"`
-		FrontendURL    string `yaml:"frontend_url"`
-	} `yaml:"api"`
+		URL            string `yaml:"url"`
+	} `yaml:"webserver"`
 }
 
 // Prüft, ob die Config-Datei existiert

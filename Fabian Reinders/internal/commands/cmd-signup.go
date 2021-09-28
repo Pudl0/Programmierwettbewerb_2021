@@ -19,7 +19,7 @@ func (commandSignup *CommandSignup) AdminPermissionsNeeded() bool {
 func (commandSignup *CommandSignup) Execute(ctx *Context) (err error) {
 	embed := discordgo.MessageEmbed{
 		Title:       "Beim Programmier-Wettbewerb anmelden",
-		Description: fmt.Sprintf("Du kannst dich ganz einfach anmelden! Gestatte mir, dich auf meine Web-Oberfläche weiterzuleiten.\n\n[***➤ HIER ANMELDEN***](%s)", ctx.Config.API.FrontendURL),
+		Description: fmt.Sprintf("Du kannst dich ganz einfach anmelden! Gestatte mir, dich auf meine Web-Oberfläche weiterzuleiten.\n\n[***➤ HIER ANMELDEN***](%s)", ctx.Config.WebServer.URL),
 		Color:       46074,
 	}
 	_, err = ctx.Session.ChannelMessageSendEmbed(ctx.Message.ChannelID, &embed)

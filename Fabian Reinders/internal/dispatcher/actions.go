@@ -1,4 +1,4 @@
-package apicommands
+package dispatcher
 
 import (
 	"fmt"
@@ -11,10 +11,10 @@ import (
 	"github.com/fabiancdng/Arrangoer/internal/models"
 )
 
-// Simpler switch-basierter Command-Handler, der Invokes von der API-
+// Simpler switch-basierter Event-Handler, der Invokes von der WebServer-
 // Goroutine entgegennimmt und durch Zugriff auf den Bot-Nutzer
 // z. B. Dinge machen kann wie Nachrichten senden oder Rollen erstellen
-func HandleAPICommand(ctx *Context) {
+func DispatchAction(ctx Context) {
 	commandSlice := strings.Split(ctx.Command, "///")
 
 	invoke := strings.ToLower(commandSlice[0])
@@ -119,6 +119,10 @@ func HandleAPICommand(ctx *Context) {
 		// Allen Team-Membern die Rolle geben
 		members := "**Mitglieder**\n"
 		for _, teamMember := range teamMebers {
+			if teamMember.Accepted != 1 {
+				continue
+			}
+
 			members += fmt.Sprintf("\n*%s* - <@!%s>", teamMember.Name, teamMember.UserID)
 			err = ctx.Session.GuildMemberRoleAdd(ctx.Config.Discord.ServerID, teamMember.UserID, role.ID)
 			if err != nil {

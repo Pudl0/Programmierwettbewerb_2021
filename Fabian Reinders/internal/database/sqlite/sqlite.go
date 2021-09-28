@@ -308,10 +308,10 @@ func (sqlite *SQLite) GetTeamMembers(teamID int) ([]*models.Application, error) 
 }
 
 // Das Team einer Anmeldung ändern
-func (sqlite *SQLite) UpdateTeam(userID int, teamID int) error {
+func (sqlite *SQLite) UpdateTeam(userID string, teamID int) error {
 	// Prüfen, ob die Anmeldung in der Datenbank existiert
 	id := 0
-	err := sqlite.db.QueryRow("SELECT `id` FROM `applications` WHERE `user_id`=?", userID).Scan(&id)
+	rows, err := sqlite.db.Query("SELECT `id` FROM `applications` WHERE `user_id`=?", userID)
 	if err != nil {
 		if err != sql.ErrNoRows {
 			return fiber.NewError(500)
@@ -321,16 +321,27 @@ func (sqlite *SQLite) UpdateTeam(userID int, teamID int) error {
 		return fiber.NewError(404)
 	}
 
+	for rows.Next() {
+		if err = rows.Scan(&id); err != nil {
+			return fiber.NewError(500)
+		}
+	}
+
 	// Prüfen, ob das Team in der Datenbank existiert
-	err = sqlite.db.QueryRow("SELECT `id` FROM `teams` WHERE `id`=?", teamID).Scan(&id)
+	rows, err = sqlite.db.Query("SELECT `id` FROM `teams` WHERE `id`=?", teamID)
 	if err != nil {
 		if err != sql.ErrNoRows {
 			return fiber.NewError(500)
 		}
 
 		// Das Team existiert (in der DB) nicht
-		log.Println("team")
 		return fiber.NewError(404)
+	}
+
+	for rows.Next() {
+		if err = rows.Scan(&id); err != nil {
+			return fiber.NewError(500)
+		}
 	}
 
 	// Das Team existiert (in der DB) und die Anmeldung wird entsprechend aktualisiert

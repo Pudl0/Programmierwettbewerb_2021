@@ -18,12 +18,11 @@ import (
 	"syscall"
 
 	"github.com/bwmarrin/discordgo"
-	"github.com/fabiancdng/Arrangoer/internal/api"
-	"github.com/fabiancdng/Arrangoer/internal/apicommands"
 	"github.com/fabiancdng/Arrangoer/internal/commands"
 	"github.com/fabiancdng/Arrangoer/internal/config"
 	"github.com/fabiancdng/Arrangoer/internal/database/sqlite"
 	"github.com/fabiancdng/Arrangoer/internal/events"
+	"github.com/fabiancdng/Arrangoer/internal/webserver"
 )
 
 func main() {
@@ -61,41 +60,20 @@ func main() {
 
 	err = session.Open()
 	if err != nil {
-		log.Panic(err)
+		panic(err)
 	}
 
 	////////////////////////////
-	//    API / WEB SERVER    //
+	//    WEB SERVER / API    //
 	////////////////////////////
 
-	// API (& ihren Webserver) in Goroutine starten
-	// und einen Channel zur Kommunikation zwischen Bot und API (/Website) aufbauen
-	apiChannel := make(chan string)
-	api, err := api.NewAPI(config, db, apiChannel)
+	// WebServer (für die API) in Goroutine starten, um die Mainroutine nicht zu blocken
+	ws, err := webserver.NewWebServer(config, db, session)
 	if err != nil {
-		log.Panic(err)
+		panic(err)
 	}
 
-	// Auf Befehle aus dem apiChannel warten und diese ggf. ausführen
-	go (func() {
-		for {
-			// Invoke aus dem Channel lesen
-			apiCommand := <-apiChannel
-
-			// Command-Context erstellen
-			ctx := &apicommands.Context{
-				Session: session,
-				Config:  config,
-				Db:      db,
-				Command: apiCommand,
-			}
-
-			// An API-Command-Handler weitergeben
-			go apicommands.HandleAPICommand(ctx)
-		}
-	})()
-
-	go api.RunAPI()
+	go ws.RunWebServer()
 
 	log.Println("Der Bot läuft jetzt! // Er kann mit STRG+C beendet werden.")
 

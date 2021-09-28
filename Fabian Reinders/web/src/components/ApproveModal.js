@@ -1,7 +1,6 @@
 import { ArrowForwardIcon } from '@chakra-ui/icons'
 import { Button, FormControl, FormLabel, Input, Modal, ModalBody, ModalCloseButton, ModalContent, ModalFooter, ModalHeader, ModalOverlay, Text, useDisclosure } from '@chakra-ui/react'
 import { useContext, useState } from 'react'
-import { ApiAddress } from '../config'
 import { ApplicationTeamContext } from '../context/ApplicationTeamContext'
 
 const ApproveModal = ({ isApplication, application, team }) => {
@@ -12,8 +11,7 @@ const ApproveModal = ({ isApplication, application, team }) => {
     const [status, setStatus] = useState("pending")
 
     const commitChange = (changeType) => {
-      fetch(ApiAddress + `/api/${isApplication ? 'application' : 'team'}/${changeType}`, {
-        mode: 'cors',
+      fetch(`/api/${isApplication ? 'application' : 'team'}/${changeType}`, {
         method: changeType === 'accept' ? 'PUT' : 'DELETE',
         headers: {
           'Accept': 'application/json',
