@@ -1,4 +1,4 @@
-package apicommands
+package dispatcher
 
 import (
 	"github.com/bwmarrin/discordgo"

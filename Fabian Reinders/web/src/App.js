@@ -18,7 +18,6 @@ import Header from './components/Header'
 import { UserContext } from './context/UserContext'
 import Signup from './pages/Signup'
 import SelectTeam from './pages/SelectTeam'
-import { ApiAddress } from './config'
 
 const App = () => {
 
@@ -27,8 +26,7 @@ const App = () => {
   useEffect(() => {
     // Notwendige Nutzerinfos mit JWT Header von der REST API abrufen
     const getUser = () => {
-      fetch(ApiAddress + "/api/auth/get/user", {
-        mode: 'cors',
+      fetch("/api/auth/get/user", {
         headers: {
           "Authorization": "Bearer " + localStorage.getItem("jwt")
         }
@@ -47,7 +45,7 @@ const App = () => {
     // State und Code bei der REST API gegen JWT eintauschen
     // und diesen im localStorage speichern
     const getCallback = (state, code) => {
-      fetch(ApiAddress + `/api/auth/callback?state=${state}&code=${code}`)
+      fetch(`/api/auth/callback?state=${state}&code=${code}`)
         .then(async res => {
           if(res.ok) {
             res = await res.json()
@@ -59,8 +57,7 @@ const App = () => {
     }
 
     const getGuild = () => {
-      fetch(ApiAddress + "/api/auth/get/guild",{
-          mode: 'cors',
+      fetch("/api/auth/get/guild",{
           headers: {
             "Authorization": "Bearer " + localStorage.getItem("jwt")
           }

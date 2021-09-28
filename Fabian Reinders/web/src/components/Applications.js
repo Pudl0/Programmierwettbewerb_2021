@@ -1,6 +1,5 @@
 import { Box, Heading } from "@chakra-ui/layout"
 import Application from "./Application"
-import { ApiAddress } from '../config'
 import { useContext, useEffect } from "react"
 import { ApplicationTeamContext } from "../context/ApplicationTeamContext"
 
@@ -11,8 +10,7 @@ const Applications = () => {
         setApprovedApplications([])
         setPendingApplications([])
 
-        fetch(ApiAddress + "/api/application/list", {
-            mode: 'cors',
+        fetch("/api/application/list", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }

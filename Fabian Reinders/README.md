@@ -1,10 +1,9 @@
 <div align="center">
     <img src="assets/Arrangør-transparent.png" width="230px" />
-    <hr>
     <h1>Arrangør</h1>
-    <strong>
-        Ein Discord Bot, der bei der Organisation des Programmier-Wettbewerbs hilft und zahlreiche Automatisierungen sowie ein (Web-) Dashboard bietet. 
-    </strong><br><br>
+    <h3>
+        Ein Discord-Bot mit Web-Dashboard, der bei der Organisation des Hackathons helfen kann.
+    </h3><br>
 </div>
 
 ---
@@ -49,10 +48,8 @@ Der Bot schickt automatisch eine Begrüßung in den Lobby-Channel, wenn ein neue
 ### Config-Datei
 Der Bot verfügt über eine 'Config-Datei', in die alle Daten eingetragen werden können, die er braucht, um zu funktionieren. Eine ```example.config.yml``` befindet sich im Ordner 'config'. Diese kann einfach kopiert und/oder umbenannt werden zu ```config.yml```. Nachdem dies erledigt ist, muss die Config ausgefüllt werden (siehe Kommentare in der Datei).
 
-Zudem muss in ```web/src/config.js``` noch die URL eingetragen werden, unter der der Bot (bzw. seine API) erreichbar ist.
-
 ### Kompilieren des Bots
-Der Bot (inklusive seiner API) sind in Go geschrieben und müssen dementsprechend mit dem [Go Compiler](https://golang.org/) kompiliert werden. Den Go Compiler kann man hier herunterladen: https://golang.org/
+Der Bot, inklusive seiner API, sind in Go geschrieben und müssen dementsprechend mit dem [Go Compiler](https://golang.org/) kompiliert werden. Den Go Compiler kann man hier herunterladen: https://golang.org/
 
 Mit folgendem Befehl kann man den Bot kompilieren:
 
@@ -74,12 +71,10 @@ Die Weboberfläche wurde mit React.js entwickelt und muss entsprechend auch komp
 
 ```npm run build```
 
-Man bekommt einen ```build/``` Ordner, der aus plain HTML und JavaScript Dateien besteht, die man auf jedem erdenklichen Web-Server bereitstellen kann (oder einfach im Browser öffnen).
-
-Web-Oberfläche und Bot dürfen auch auf anderen Ports oder sogar Servern laufen (Einträge in der config.yml und config.js sind zu beachten).
+Man bekommt einen ```build/``` Ordner, der aus plain HTML und JavaScript Dateien besteht, die dann automatisch vom integrierten WebServer bereitgestellt werden.
 
 ### Woher bekomme ich Client Secret und Client ID?
-Den Token, das Client Secret und die Client ID gibt es auf der [Discord Developers Seite](https://discord.com/developers) im OAuth-Menü. Zudem muss dort eine 'redirect uri' eingetragen werden, also eine URL, an die der Nutzer nach dem Login mit Discord weitergeleitet wird. Dort muss die URLder Web-Oberfläche eingetragen werden (wie im Bild zu sehen).
+Den Token, das Client Secret und die Client ID gibt es auf der [Discord Developers Seite](https://discord.com/developers) im OAuth-Menü. Zudem muss dort eine 'redirect uri' eingetragen werden, also eine URL, an die der Nutzer nach dem Login mit Discord weitergeleitet wird. Dort muss die URL der Web-Oberfläche eingetragen werden (wie im Bild zu sehen).
 
 <img width="100%" src="assets/screenshots/discord-developers-oauth.png" />
 

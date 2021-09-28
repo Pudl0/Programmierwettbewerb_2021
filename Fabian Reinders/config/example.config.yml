@@ -17,10 +17,8 @@ discord:
     # //USER// = "Nutzermention", /// = Zeilenumbruch
     welcome_message: '**Hey, //USER// 👋**/// **Willkommen auf dem Discord des Programmier-Wettbewerbs.**/// Schön, dass du da bist!'
 
-api:
+webserver:
     # Adresse und Port, an den die API bindet; Keine Adresse = API läuft auf 0.0.0.0
     address_and_port: ':5000'
-    # URL unter der die API erreichbar ist (http, https ist zu beachten)
-    api_url: 'http://localhost:5000'
-    # URL unter der das Web-Dashboard erreichbar ist (http, https ist zu beachten)
-    frontend_url: 'http://localhost:3000'
+    # URL unter der das Dashboard und die API erreichbar sind (http, https ist zu beachten)
+    url: 'http://localhost:5000'

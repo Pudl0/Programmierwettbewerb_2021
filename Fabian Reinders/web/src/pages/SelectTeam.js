@@ -2,7 +2,6 @@ import { Button } from '@chakra-ui/button'
 import { Box, Flex, Heading, Text } from '@chakra-ui/layout'
 import { Select } from '@chakra-ui/select'
 import React, { useContext, useEffect, useState } from 'react'
-import { ApiAddress } from '../config'
 import { UserContext } from '../context/UserContext'
 const SelectTeam = () => {
 
@@ -17,20 +16,18 @@ const SelectTeam = () => {
             return
         }
 
-        fetch(ApiAddress + "/api/team/select", {
-            mode: 'cors',
+        fetch("/api/team/select", {
             method: 'PUT',
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             },
-            body: JSON.stringify({user_id: Number(user.id), team_id: Number(selectedTeam)})
+            body: JSON.stringify({user_id: user.id, team_id: Number(selectedTeam)})
         })
         console.log(selectedTeam)
     }
 
     useEffect(() => {
-        fetch(ApiAddress + "/api/team/list", {
-            mode: 'cors',
+        fetch("/api/team/list", {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('jwt')
             }
